@@ -1,0 +1,7 @@
+{
+  "name": "Nur - Quran Journey",
+  "description": "A calm, progressive Quran learning experience that guides users through Surahs from easiest to most complex with AI-powered insights.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
