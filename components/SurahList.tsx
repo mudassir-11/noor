@@ -45,7 +45,7 @@ const SurahList: React.FC<SurahListProps> = ({ surahs, progress, onSelect }) => 
     <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500 pb-24">
       <header>
         <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Journey Map</h2>
-        <p style={{ color: 'var(--text-secondary)' }}>Progressing from shortest to more complex themes.</p>
+        <p style={{ color: 'var(--text-secondary)' }}>Start with the easy steps to reach profound wisdom.</p>
       </header>
 
       {/* Search Bar */}

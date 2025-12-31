@@ -18,7 +18,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeScreen, onNavigate }) =
       {/* Header */}
       <header className="p-6 pb-2 sticky top-0 backdrop-blur-md z-10 flex items-center justify-between" style={{ backgroundColor: isDark ? 'rgba(15, 26, 24, 0.8)' : 'rgba(248, 250, 249, 0.8)' }}>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--accent)' }}>Nur</h1>
+          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--accent)' }}>Noor</h1>
           <p className="text-xs font-medium uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>Enlighten Your Journey</p>
         </div>
         <button
