@@ -24,9 +24,33 @@ export interface UserProgress {
   dailyStreak: number;
 }
 
+export interface PrayerLog {
+  id?: string;
+  user_id?: string;
+  prayer_date: string; // YYYY-MM-DD
+  fajr: boolean;
+  dhuhr: boolean;
+  asr: boolean;
+  maghrib: boolean;
+  isha: boolean;
+}
+
+export type PrayerName = 'fajr' | 'dhuhr' | 'asr' | 'maghrib' | 'isha';
+
+export const PRAYER_NAMES: PrayerName[] = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+
+export const PRAYER_LABELS: Record<PrayerName, string> = {
+  fajr: 'Fajr',
+  dhuhr: 'Dhuhr',
+  asr: 'Asr',
+  maghrib: 'Maghrib',
+  isha: 'Isha'
+};
+
 export enum AppScreen {
   DASHBOARD = 'DASHBOARD',
   SURAH_LIST = 'SURAH_LIST',
   READER = 'READER',
-  INSIGHTS = 'INSIGHTS'
+  INSIGHTS = 'INSIGHTS',
+  SALAH_TRACKER = 'SALAH_TRACKER'
 }
