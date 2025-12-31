@@ -14,13 +14,12 @@ import SearchView from './components/SearchView';
 import { AppScreen, UserProgress, Surah } from './types';
 import { fetchSurahs } from './services/surahService';
 import { getProgress, updateProgress, markSurahComplete } from './services/progressService';
-import { QURAN_DATA } from './data/surahs';
 
 // Inner app component that uses auth context
 const AppContent: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
   const [activeScreen, setActiveScreen] = useState<AppScreen>(AppScreen.DASHBOARD);
-  const [surahs, setSurahs] = useState<Surah[]>(QURAN_DATA);
+  const [surahs, setSurahs] = useState<Surah[]>([]);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState<UserProgress>({
     completedSurahs: [],

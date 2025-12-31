@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { Surah, UserProgress } from '../types';
-import { CheckCircle2, Lock, ArrowRight, Search, X } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Search, X } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface SurahListProps {
@@ -95,25 +95,15 @@ const SurahList: React.FC<SurahListProps> = ({ surahs, progress, onSelect }) => 
         ) : (
           filteredSurahs.map((surah) => {
             const isCompleted = progress.completedSurahs.includes(surah.id);
-            // When searching, don't lock surahs
-            const isLocked = !searchQuery && surahs.indexOf(surah) > progress.completedSurahs.length;
 
             return (
               <div
                 key={surah.id}
-                onClick={() => !isLocked && onSelect(surah)}
-                className={`
-                  p-5 rounded-3xl border transition-all flex items-center justify-between
-                  ${isLocked
-                    ? 'opacity-50 cursor-not-allowed'
-                    : 'hover:shadow-md cursor-pointer active:scale-95'
-                  }
-                `}
+                onClick={() => onSelect(surah)}
+                className="p-5 rounded-3xl border transition-all flex items-center justify-between hover:shadow-md cursor-pointer active:scale-95"
                 style={{
-                  backgroundColor: isLocked
-                    ? (isDark ? 'var(--bg-secondary)' : '#f9fafb')
-                    : (isDark ? 'var(--bg-secondary)' : 'white'),
-                  borderColor: isLocked ? '#e5e7eb' : 'var(--bg-secondary)'
+                  backgroundColor: isDark ? 'var(--bg-secondary)' : 'white',
+                  borderColor: 'var(--bg-secondary)'
                 }}
               >
                 <div className="flex items-center gap-4">
@@ -132,7 +122,7 @@ const SurahList: React.FC<SurahListProps> = ({ surahs, progress, onSelect }) => 
                       <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{surah.versesCount} Verses</span>
                       <span className="w-1 h-1 rounded-full bg-[#cbd5e1]"></span>
                       <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded-md ${surah.complexity === 1 ? 'bg-green-100 text-green-700' :
-                          surah.complexity === 2 ? 'bg-blue-100 text-blue-700' : 'bg-orange-100 text-orange-700'
+                        surah.complexity === 2 ? 'bg-blue-100 text-blue-700' : 'bg-orange-100 text-orange-700'
                         }`}>
                         {surah.complexity === 1 ? 'Beginner' : surah.complexity === 2 ? 'Intermediate' : 'Advanced'}
                       </span>
@@ -141,14 +131,10 @@ const SurahList: React.FC<SurahListProps> = ({ surahs, progress, onSelect }) => 
                 </div>
 
                 <div className="text-right">
-                  {isLocked ? (
-                    <Lock size={20} className="text-[#cbd5e1]" />
-                  ) : (
-                    <div className="flex flex-col items-end">
-                      <span className="arabic-text text-xl" style={{ color: 'var(--accent)' }}>{surah.name}</span>
-                      <ArrowRight size={16} style={{ color: 'var(--accent)', opacity: 0.3 }} />
-                    </div>
-                  )}
+                  <div className="flex flex-col items-end">
+                    <span className="arabic-text text-xl" style={{ color: 'var(--accent)' }}>{surah.name}</span>
+                    <ArrowRight size={16} style={{ color: 'var(--accent)', opacity: 0.3 }} />
+                  </div>
                 </div>
               </div>
             );

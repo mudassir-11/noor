@@ -7,7 +7,8 @@ export async function fetchSurahs(): Promise<Surah[]> {
     const { data: surahs, error: surahError } = await supabase
         .from('surahs')
         .select('*')
-        .order('number');
+        .order('complexity', { ascending: true })
+        .order('verses_count', { ascending: true });
 
     if (surahError) {
         console.error('Error fetching surahs:', surahError);

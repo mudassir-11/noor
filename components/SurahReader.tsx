@@ -187,9 +187,9 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
             onClick={() => onComplete(surah.id)}
             className="bg-[#2D5A4C] text-white px-8 py-4 rounded-[2rem] font-bold flex items-center gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all"
           >
-            <Check size={20} /> Mark as Completed
+            <Check size={20} /> Mark as Learned
           </button>
-          <p className="mt-4 text-xs text-[#6B8E85]">Take a moment to reflect on your learning.</p>
+          <p className="mt-4 text-xs text-[#6B8E85]">Tap when you have fully understood this Surah.</p>
         </div>
       </div>
 

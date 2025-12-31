@@ -59,16 +59,6 @@ const Layout: React.FC<LayoutProps> = ({ children, activeScreen, onNavigate }) =
           <BookOpen size={22} />
         </button>
         <button
-          onClick={() => onNavigate(AppScreen.SALAH_TRACKER)}
-          className={`p-3 rounded-2xl transition-all ${activeScreen === AppScreen.SALAH_TRACKER ? 'shadow-lg' : 'hover:text-white'}`}
-          style={{
-            backgroundColor: activeScreen === AppScreen.SALAH_TRACKER ? 'var(--accent)' : 'transparent',
-            color: activeScreen === AppScreen.SALAH_TRACKER ? 'white' : '#6B8E85'
-          }}
-        >
-          <Moon size={22} />
-        </button>
-        <button
           onClick={() => onNavigate(AppScreen.BOOKMARKS)}
           className={`p-3 rounded-2xl transition-all ${activeScreen === AppScreen.BOOKMARKS ? 'shadow-lg' : 'hover:text-white'}`}
           style={{
@@ -77,6 +67,16 @@ const Layout: React.FC<LayoutProps> = ({ children, activeScreen, onNavigate }) =
           }}
         >
           <Bookmark size={22} />
+        </button>
+        <button
+          onClick={() => onNavigate(AppScreen.SALAH_TRACKER)}
+          className={`p-3 rounded-2xl transition-all ${activeScreen === AppScreen.SALAH_TRACKER ? 'shadow-lg' : 'hover:text-white'}`}
+          style={{
+            backgroundColor: activeScreen === AppScreen.SALAH_TRACKER ? 'var(--accent)' : 'transparent',
+            color: activeScreen === AppScreen.SALAH_TRACKER ? 'white' : '#6B8E85'
+          }}
+        >
+          <Moon size={22} />
         </button>
         <button
           onClick={() => onNavigate(AppScreen.PRAYER_TIMES)}
