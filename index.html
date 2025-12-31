@@ -1,40 +1,70 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nur - Quran Journey</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/favicon.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#2D5A4C">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        :root {
+            --bg-primary: #F8FAF9;
+            --bg-secondary: #E8F3F0;
+            --text-primary: #1A2F2B;
+            --text-secondary: #6B8E85;
+            --accent: #2D5A4C;
+        }
+
+        .dark {
+            --bg-primary: #0F1A18;
+            --bg-secondary: #1A2F2B;
+            --text-primary: #F8FAF9;
+            --text-secondary: #A8C5BC;
+            --accent: #4A9A84;
+        }
+
         body {
             font-family: 'Outfit', 'Inter', sans-serif;
-            background-color: #F8FAF9;
-            color: #1A2F2B;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
         }
+
         .arabic-text {
             font-family: 'Amiri', serif;
             direction: rtl;
         }
-        /* Custom scrollbar for a cleaner look */
+
         ::-webkit-scrollbar {
             width: 4px;
         }
+
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: var(--bg-secondary);
         }
+
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: var(--text-secondary);
             border-radius: 10px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
     </style>
-<script type="importmap">
+    <script type="importmap">
 {
   "imports": {
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
@@ -46,8 +76,10 @@
 }
 </script>
 </head>
+
 <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>
