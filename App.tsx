@@ -8,6 +8,9 @@ import Dashboard from './components/Dashboard';
 import SurahList from './components/SurahList';
 import SurahReader from './components/SurahReader';
 import SalahTracker from './components/SalahTracker';
+import BookmarksView from './components/BookmarksView';
+import PrayerTimesView from './components/PrayerTimesView';
+import SearchView from './components/SearchView';
 import { AppScreen, UserProgress, Surah } from './types';
 import { fetchSurahs } from './services/surahService';
 import { getProgress, updateProgress, markSurahComplete } from './services/progressService';
@@ -125,6 +128,9 @@ const AppContent: React.FC = () => {
       {activeScreen === AppScreen.SALAH_TRACKER && (
         <SalahTracker />
       )}
+      {activeScreen === AppScreen.BOOKMARKS && (
+        <BookmarksView />
+      )}
       {activeScreen === AppScreen.INSIGHTS && (
         <div className="flex flex-col items-center justify-center h-[70vh] text-center space-y-4">
           <div className="w-24 h-24 bg-[#E8F3F0] rounded-full flex items-center justify-center">
@@ -133,6 +139,12 @@ const AppContent: React.FC = () => {
           <h2 className="text-xl font-bold">Deep Insights Pending</h2>
           <p className="text-[#6B8E85] max-w-xs mx-auto">Continue your journey to unlock advanced spiritual metrics.</p>
         </div>
+      )}
+      {activeScreen === AppScreen.PRAYER_TIMES && (
+        <PrayerTimesView />
+      )}
+      {activeScreen === AppScreen.SEARCH && (
+        <SearchView surahs={surahs} />
       )}
     </Layout>
   );

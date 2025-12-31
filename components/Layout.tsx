@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, BookOpen, BarChart2, Moon, Sun } from 'lucide-react';
+import { Home, BookOpen, Moon, Sun, Bookmark, Clock } from 'lucide-react';
 import { AppScreen } from '../types';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -69,14 +69,24 @@ const Layout: React.FC<LayoutProps> = ({ children, activeScreen, onNavigate }) =
           <Moon size={22} />
         </button>
         <button
-          onClick={() => onNavigate(AppScreen.INSIGHTS)}
-          className={`p-3 rounded-2xl transition-all ${activeScreen === AppScreen.INSIGHTS ? 'shadow-lg' : 'hover:text-white'}`}
+          onClick={() => onNavigate(AppScreen.BOOKMARKS)}
+          className={`p-3 rounded-2xl transition-all ${activeScreen === AppScreen.BOOKMARKS ? 'shadow-lg' : 'hover:text-white'}`}
           style={{
-            backgroundColor: activeScreen === AppScreen.INSIGHTS ? 'var(--accent)' : 'transparent',
-            color: activeScreen === AppScreen.INSIGHTS ? 'white' : '#6B8E85'
+            backgroundColor: activeScreen === AppScreen.BOOKMARKS ? 'var(--accent)' : 'transparent',
+            color: activeScreen === AppScreen.BOOKMARKS ? 'white' : '#6B8E85'
           }}
         >
-          <BarChart2 size={22} />
+          <Bookmark size={22} />
+        </button>
+        <button
+          onClick={() => onNavigate(AppScreen.PRAYER_TIMES)}
+          className={`p-3 rounded-2xl transition-all ${activeScreen === AppScreen.PRAYER_TIMES ? 'shadow-lg' : 'hover:text-white'}`}
+          style={{
+            backgroundColor: activeScreen === AppScreen.PRAYER_TIMES ? 'var(--accent)' : 'transparent',
+            color: activeScreen === AppScreen.PRAYER_TIMES ? 'white' : '#6B8E85'
+          }}
+        >
+          <Clock size={22} />
         </button>
       </nav>
     </div>
