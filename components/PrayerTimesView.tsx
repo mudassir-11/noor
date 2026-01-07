@@ -144,8 +144,7 @@ const PrayerTimesView: React.FC = () => {
                                 }`}
                             style={{
                                 backgroundColor: isDark ? 'var(--bg-secondary)' : 'white',
-                                border: '1px solid var(--bg-secondary)',
-                                ringColor: 'var(--accent)'
+                                border: '1px solid var(--bg-secondary)'
                             }}
                         >
                             <div className="flex items-center gap-3">

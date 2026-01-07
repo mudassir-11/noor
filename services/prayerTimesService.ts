@@ -24,7 +24,7 @@ export interface Location {
 export async function getUserLocation(): Promise<Location | null> {
     return new Promise((resolve) => {
         if (!navigator.geolocation) {
-            console.log('Geolocation not supported');
+
             resolve(null);
             return;
         }
@@ -51,7 +51,7 @@ export async function getUserLocation(): Promise<Location | null> {
                 resolve(location);
             },
             (error) => {
-                console.log('Location error:', error);
+
                 resolve(null);
             },
             { timeout: 10000 }

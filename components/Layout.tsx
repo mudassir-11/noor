@@ -16,18 +16,25 @@ const Layout: React.FC<LayoutProps> = ({ children, activeScreen, onNavigate }) =
   return (
     <div className="flex flex-col min-h-screen max-w-md mx-auto shadow-2xl relative" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
       {/* Header */}
-      <header className="p-6 pb-2 sticky top-0 backdrop-blur-md z-10 flex items-center justify-between" style={{ backgroundColor: isDark ? 'rgba(15, 26, 24, 0.8)' : 'rgba(248, 250, 249, 0.8)' }}>
+      {/* Header */}
+      <header className="p-6 pb-2 sticky top-0 z-10 flex items-center justify-between transition-all duration-300 backdrop-blur-xl"
+        style={{
+          borderBottom: '1px solid var(--glass-border)',
+          backgroundColor: 'rgba(var(--bg-primary), 0.5)' // semi-transparent
+        }}>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--accent)' }}>Noor</h1>
-          <p className="text-xs font-medium uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>Enlighten Your Journey</p>
+          <h1 className="text-3xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]">
+            Noor
+          </h1>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] mt-1 opacity-80" style={{ color: 'var(--text-secondary)' }}>Enlighten Your Journey</p>
         </div>
         <button
           onClick={toggleTheme}
-          className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
+          className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-90 shadow-sm border border-[var(--glass-border)]"
           style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--accent)' }}
           title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
         >
-          {isDark ? <Sun size={20} /> : <Moon size={20} />}
+          {isDark ? <Sun size={20} className="fill-current" /> : <Moon size={20} className="fill-current" />}
         </button>
       </header>
 
@@ -37,57 +44,37 @@ const Layout: React.FC<LayoutProps> = ({ children, activeScreen, onNavigate }) =
       </main>
 
       {/* Tab Bar */}
-      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-[calc(28rem-3rem)] rounded-3xl p-3 flex justify-around items-center shadow-xl z-20 transition-all" style={{ backgroundColor: isDark ? '#1A2F2B' : '#1A2F2B' }}>
-        <button
-          onClick={() => onNavigate(AppScreen.DASHBOARD)}
-          className={`p-3 rounded-2xl transition-all ${activeScreen === AppScreen.DASHBOARD ? 'shadow-lg' : 'hover:text-white'}`}
-          style={{
-            backgroundColor: activeScreen === AppScreen.DASHBOARD ? 'var(--accent)' : 'transparent',
-            color: activeScreen === AppScreen.DASHBOARD ? 'white' : '#6B8E85'
-          }}
-        >
-          <Home size={22} />
-        </button>
-        <button
-          onClick={() => onNavigate(AppScreen.SURAH_LIST)}
-          className={`p-3 rounded-2xl transition-all ${activeScreen === AppScreen.SURAH_LIST ? 'shadow-lg' : 'hover:text-white'}`}
-          style={{
-            backgroundColor: activeScreen === AppScreen.SURAH_LIST ? 'var(--accent)' : 'transparent',
-            color: activeScreen === AppScreen.SURAH_LIST ? 'white' : '#6B8E85'
-          }}
-        >
-          <BookOpen size={22} />
-        </button>
-        <button
-          onClick={() => onNavigate(AppScreen.BOOKMARKS)}
-          className={`p-3 rounded-2xl transition-all ${activeScreen === AppScreen.BOOKMARKS ? 'shadow-lg' : 'hover:text-white'}`}
-          style={{
-            backgroundColor: activeScreen === AppScreen.BOOKMARKS ? 'var(--accent)' : 'transparent',
-            color: activeScreen === AppScreen.BOOKMARKS ? 'white' : '#6B8E85'
-          }}
-        >
-          <Bookmark size={22} />
-        </button>
-        <button
-          onClick={() => onNavigate(AppScreen.SALAH_TRACKER)}
-          className={`p-3 rounded-2xl transition-all ${activeScreen === AppScreen.SALAH_TRACKER ? 'shadow-lg' : 'hover:text-white'}`}
-          style={{
-            backgroundColor: activeScreen === AppScreen.SALAH_TRACKER ? 'var(--accent)' : 'transparent',
-            color: activeScreen === AppScreen.SALAH_TRACKER ? 'white' : '#6B8E85'
-          }}
-        >
-          <Moon size={22} />
-        </button>
-        <button
-          onClick={() => onNavigate(AppScreen.PRAYER_TIMES)}
-          className={`p-3 rounded-2xl transition-all ${activeScreen === AppScreen.PRAYER_TIMES ? 'shadow-lg' : 'hover:text-white'}`}
-          style={{
-            backgroundColor: activeScreen === AppScreen.PRAYER_TIMES ? 'var(--accent)' : 'transparent',
-            color: activeScreen === AppScreen.PRAYER_TIMES ? 'white' : '#6B8E85'
-          }}
-        >
-          <Clock size={22} />
-        </button>
+      {/* Glass Tab Bar */}
+      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-[calc(28rem-3rem)] rounded-[2rem] p-2 flex justify-between items-center shadow-2xl z-20 transition-all backdrop-blur-xl border border-[var(--glass-border)]"
+        style={{
+          background: isDark ? 'rgba(13, 31, 26, 0.85)' : 'rgba(255, 255, 255, 0.85)',
+          boxShadow: '0 20px 40px -10px rgba(0,0,0,0.2)'
+        }}>
+        {[
+          { icon: Home, screen: AppScreen.DASHBOARD },
+          { icon: BookOpen, screen: AppScreen.SURAH_LIST },
+          { icon: Bookmark, screen: AppScreen.BOOKMARKS },
+          { icon: Moon, screen: AppScreen.SALAH_TRACKER },
+          { icon: Clock, screen: AppScreen.PRAYER_TIMES }
+        ].map((item, idx) => {
+          const isActive = activeScreen === item.screen;
+          return (
+            <button
+              key={idx}
+              onClick={() => onNavigate(item.screen)}
+              className={`p-4 rounded-[1.5rem] transition-all duration-300 relative group ${isActive ? '-translate-y-1' : 'hover:scale-110'}`}
+              style={{
+                backgroundColor: isActive ? 'var(--accent)' : 'transparent',
+                color: isActive ? 'white' : 'var(--text-secondary)'
+              }}
+            >
+              {isActive && (
+                <div className="absolute inset-0 rounded-[1.5rem] opacity-50 blur-lg -z-10" style={{ backgroundColor: 'var(--accent)' }} />
+              )}
+              <item.icon size={22} className={`transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`} strokeWidth={isActive ? 2.5 : 2} />
+            </button>
+          )
+        })}
       </nav>
     </div>
   );

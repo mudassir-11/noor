@@ -73,7 +73,7 @@ export class AudioPlayer {
             throw new Error('Audio URL not found');
         }
 
-        console.log('Playing audio from:', url);
+
 
         return new Promise((resolve, reject) => {
             this.audio = new Audio(url);
@@ -91,7 +91,7 @@ export class AudioPlayer {
             };
 
             this.audio.oncanplaythrough = () => {
-                console.log('Audio ready to play');
+
             };
 
             this.audio.play().catch(reject);

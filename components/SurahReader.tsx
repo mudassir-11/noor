@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Surah, Verse } from '../types';
-import { ChevronLeft, Info, Sparkles, X, ChevronRight, Check, Bookmark, BookmarkCheck, Play, Pause, Volume2 } from 'lucide-react';
+import { ChevronLeft, Info, Sparkles, X, ChevronRight, Check, Bookmark, BookmarkCheck, Play, Pause, Volume2, Shield } from 'lucide-react';
 import { getSurahInsights, explainVerse } from '../services/aiService';
 import { toggleBookmark, getBookmarks, Bookmark as BookmarkType } from '../services/bookmarkService';
 import { audioPlayer } from '../services/audioService';
 import { recordReading } from '../services/streakService';
+import { useTranslation } from '../contexts/TranslationContext';
+import { fetchSurahTranslation } from '../services/translationService';
+import { Globe } from 'lucide-react';
 
 interface SurahReaderProps {
   surah: Surah;
@@ -22,6 +25,12 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
   const [bookmarkedVerses, setBookmarkedVerses] = useState<Set<number>>(new Set());
   const [playingVerse, setPlayingVerse] = useState<number | null>(null);
   const [audioLoading, setAudioLoading] = useState<number | null>(null);
+  const [isTestMode, setIsTestMode] = useState(false);
+  const [revealedVerses, setRevealedVerses] = useState<Set<number>>(new Set());
+
+  const { language, setLanguage, getLanguageLabel } = useTranslation();
+  const [customTranslations, setCustomTranslations] = useState<Record<number, string>>({});
+  const [loadingTranslation, setLoadingTranslation] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -44,7 +53,36 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
     loadData();
   }, [surah]);
 
+  useEffect(() => {
+    async function updateTranslation() {
+      if (language === 'en') {
+        setCustomTranslations({});
+        return;
+      }
+
+      setLoadingTranslation(true);
+      const translations = await fetchSurahTranslation(surah.number, language);
+      setCustomTranslations(translations);
+      setLoadingTranslation(false);
+    }
+    updateTranslation();
+  }, [surah, language]);
+
   const handleExplainVerse = async (verse: Verse) => {
+    // If in test mode, tapping toggles reveal instead of explaining
+    if (isTestMode) {
+      setRevealedVerses(prev => {
+        const newSet = new Set(prev);
+        if (newSet.has(verse.number)) {
+          newSet.delete(verse.number);
+        } else {
+          newSet.add(verse.number);
+        }
+        return newSet;
+      });
+      return;
+    }
+
     setSelectedVerse(verse);
     setExplainingVerse(true);
     const explanation = await explainVerse(verse, surah.englishName);
@@ -110,15 +148,46 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
         <button onClick={onBack} className="p-2 -ml-2 text-[#6B8E85] hover:text-[#2D5A4C]">
           <ChevronLeft size={24} />
         </button>
-        <div className="text-center">
+        <div className="flex flex-col items-center">
           <h3 className="font-bold text-[#2D5A4C]">{surah.englishName}</h3>
           <p className="text-[10px] text-[#6B8E85] uppercase tracking-widest">{surah.meaning}</p>
         </div>
         <button
           onClick={() => setShowInsightsModal(true)}
-          className="p-2 -mr-2 text-[#2D5A4C] bg-[#E8F3F0] rounded-full hover:bg-[#D9EAE5] transition-colors"
+          className="p-2 -mr-2 text-[#2D5A4C] hover:bg-[#E8F3F0] rounded-full transition-colors"
         >
-          <Sparkles size={18} />
+          <Sparkles size={20} />
+        </button>
+      </div>
+      <div className="flex items-center justify-center gap-4 py-2">
+        <button
+          onClick={() => {
+            const langs = ['en', 'ur', 'roman'] as const;
+            const currentIndex = langs.indexOf(language as any);
+            const nextIndex = (currentIndex + 1) % langs.length;
+            setLanguage(langs[nextIndex]);
+          }}
+          className="px-3 py-1.5 rounded-full transition-transform active:scale-95 flex items-center gap-2 hover:brightness-110"
+          style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}
+          title={`Language: ${getLanguageLabel(language)}`}
+        >
+          <Globe size={16} />
+          <span className="text-xs font-bold uppercase">{language === 'roman' ? 'TR' : language}</span>
+        </button>
+        <button
+          onClick={() => {
+            setIsTestMode(!isTestMode);
+            setRevealedVerses(new Set()); // Reset reveals when toggling
+          }}
+          className="px-3 py-1.5 rounded-full transition-transform active:scale-95 flex items-center gap-2 hover:brightness-110"
+          style={{
+            backgroundColor: isTestMode ? 'var(--accent)' : 'var(--bg-secondary)',
+            color: isTestMode ? '#fff' : 'var(--text-secondary)'
+          }}
+          title={isTestMode ? "Exit Hifz Mode" : "Enter Hifz Mode"}
+        >
+          <Shield size={16} className={isTestMode ? "fill-current" : ""} />
+          <span className="text-xs font-bold uppercase">Hifz</span>
         </button>
       </div>
 
@@ -169,13 +238,23 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
                   )}
                 </button>
               </div>
-              <p className="arabic-text text-3xl leading-[4.5rem] text-right text-[#1A2F2B] group-hover:text-[#2D5A4C] transition-colors">
-                {verse.text}
+              <p className={`
+                arabic-text text-3xl leading-[4.5rem] text-right transition-all duration-300
+                ${isTestMode && !revealedVerses.has(verse.number)
+                  ? 'text-transparent bg-[#1A2F2B]/5 rounded-xl select-none blur-sm'
+                  : 'text-[#1A2F2B] group-hover:text-[#2D5A4C]'}
+              `}>
+                {isTestMode && !revealedVerses.has(verse.number) ? verse.text.replace(/[^\s]/g, '—') : verse.text}
               </p>
             </div>
-            <div className="pl-12">
-              <p className="text-[#6B8E85] leading-relaxed text-sm italic font-light group-hover:text-[#2D5A4C] transition-colors">
-                {verse.translation}
+            <div className="pl-12 transition-all duration-300">
+              <p className={`
+                leading-relaxed text-sm italic font-light transition-colors
+                ${isTestMode && !revealedVerses.has(verse.number)
+                  ? 'text-transparent bg-[#F1F5F4] rounded select-none'
+                  : 'text-[#6B8E85] group-hover:text-[#2D5A4C]'}
+              `}>
+                {loadingTranslation ? 'Loading...' : (customTranslations[verse.number] || verse.translation)}
               </p>
             </div>
           </div>
@@ -194,84 +273,99 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
       </div>
 
       {/* Insights Modal */}
-      {showInsightsModal && (
-        <div className="fixed inset-0 z-50 bg-[#1A2F2B]/40 backdrop-blur-sm flex items-end justify-center p-4">
-          <div className="bg-white w-full max-w-md rounded-[3rem] p-8 space-y-6 shadow-2xl animate-in slide-in-from-bottom-full duration-500 max-h-[85vh] overflow-y-auto">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-2 text-[#2D5A4C]">
-                <Sparkles size={20} className="fill-[#2D5A4C]" />
-                <h3 className="text-xl font-bold">Divine Insights</h3>
+      {
+        showInsightsModal && (
+          <div className="fixed inset-0 z-50 flex items-end justify-center p-4 backdrop-blur-sm" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+            <div className="w-full max-w-md rounded-[3rem] p-8 space-y-6 shadow-2xl animate-in slide-in-from-bottom-full duration-500 max-h-[85vh] overflow-y-auto"
+              style={{
+                backgroundColor: 'var(--bg-primary)',
+                border: '1px solid var(--glass-border)'
+              }}>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2" style={{ color: 'var(--accent)' }}>
+                  <Sparkles size={20} className="fill-current" />
+                  <h3 className="text-xl font-bold">Divine Insights</h3>
+                </div>
+                <button onClick={() => setShowInsightsModal(false)} className="p-2 rounded-full transition-colors hover:opacity-80" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}>
+                  <X size={20} />
+                </button>
               </div>
-              <button onClick={() => setShowInsightsModal(false)} className="p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <X size={20} />
-              </button>
-            </div>
 
-            {loadingInsights ? (
-              <div className="py-12 flex flex-col items-center justify-center space-y-4">
-                <div className="w-10 h-10 border-4 border-[#2D5A4C] border-t-transparent rounded-full animate-spin"></div>
-                <p className="text-sm text-[#6B8E85] animate-pulse">Gathering wisdom from the heavens...</p>
-              </div>
-            ) : insights ? (
-              <div className="space-y-4">
-                <div>
-                  <h4 className="text-xs font-bold text-[#6B8E85] uppercase tracking-wider mb-1">The Essence</h4>
-                  <p className="text-sm text-[#1A2F2B]">{insights.summary}</p>
+              {loadingInsights ? (
+                <div className="py-12 flex flex-col items-center justify-center space-y-4">
+                  <div className="w-10 h-10 border-4 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--accent)', borderTopColor: 'transparent' }}></div>
+                  <p className="text-sm animate-pulse" style={{ color: 'var(--text-secondary)' }}>Gathering wisdom from the heavens...</p>
                 </div>
-                <div>
-                  <h4 className="text-xs font-bold text-[#6B8E85] uppercase tracking-wider mb-1">Historical Context</h4>
-                  <p className="text-sm text-[#1A2F2B]">{insights.historicalContext}</p>
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-[#6B8E85] uppercase tracking-wider mb-1">Key Lesson</h4>
-                  <p className="text-sm text-[#1A2F2B] font-medium">{insights.spiritualLesson}</p>
-                </div>
-                {insights.keyVocabulary && insights.keyVocabulary.length > 0 && (
+              ) : insights ? (
+                <div className="space-y-4">
                   <div>
-                    <h4 className="text-xs font-bold text-[#6B8E85] uppercase tracking-wider mb-2">Key Vocabulary</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {insights.keyVocabulary.map((v: any, i: number) => (
-                        <span key={i} className="px-3 py-1 bg-[#E8F3F0] rounded-full text-xs">
-                          <span className="arabic-text font-bold">{v.word}</span> - {v.meaning}
-                        </span>
-                      ))}
-                    </div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--text-secondary)' }}>The Essence</h4>
+                    <p className="text-sm" style={{ color: 'var(--text-primary)' }}>{insights.summary}</p>
                   </div>
-                )}
-              </div>
-            ) : (
-              <p className="text-sm text-[#6B8E85]">Could not load insights. Please try again.</p>
-            )}
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--text-secondary)' }}>Historical Context</h4>
+                    <p className="text-sm" style={{ color: 'var(--text-primary)' }}>{insights.historicalContext}</p>
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--text-secondary)' }}>Key Lesson</h4>
+                    <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{insights.spiritualLesson}</p>
+                  </div>
+                  {insights.keyVocabulary && insights.keyVocabulary.length > 0 && (
+                    <div>
+                      <h4 className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: 'var(--text-secondary)' }}>Key Vocabulary</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {insights.keyVocabulary.map((v: any, i: number) => (
+                          <span key={i} className="px-3 py-1 rounded-full text-xs" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}>
+                            <span className="arabic-text font-bold text-sm">{v.word}</span> <span className="opacity-70">- {v.meaning}</span>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Could not load insights. Please try again.</p>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }
 
       {/* Verse Explanation Modal */}
-      {selectedVerse && (
-        <div className="fixed inset-0 z-50 bg-[#1A2F2B]/40 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setSelectedVerse(null)}>
-          <div className="bg-white w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl animate-in zoom-in-95 duration-300" onClick={e => e.stopPropagation()}>
-            <div className="flex justify-between items-center">
-              <span className="text-xs font-bold text-[#6B8E85] uppercase tracking-wider">Verse {selectedVerse.number}</span>
-              <button onClick={() => setSelectedVerse(null)} className="p-1 rounded-full hover:bg-gray-100">
-                <X size={18} />
-              </button>
-            </div>
-            <p className="arabic-text text-2xl text-right text-[#2D5A4C] leading-[3.5rem]">{selectedVerse.text}</p>
-            <p className="text-sm italic text-[#6B8E85] border-l-2 border-[#2D5A4C] pl-3">{selectedVerse.translation}</p>
-            <div className="pt-2">
-              {explainingVerse ? (
-                <div className="flex items-center gap-2 text-[#6B8E85]">
-                  <div className="w-4 h-4 border-2 border-[#2D5A4C] border-t-transparent rounded-full animate-spin"></div>
-                  <span className="text-sm">Thinking...</span>
-                </div>
-              ) : verseExplanation ? (
-                <p className="text-sm text-[#1A2F2B] leading-relaxed">{verseExplanation}</p>
-              ) : null}
+      {
+        selectedVerse && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
+            style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+            onClick={() => setSelectedVerse(null)}>
+            <div className="w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl animate-in zoom-in-95 duration-300"
+              style={{
+                backgroundColor: 'var(--bg-primary)',
+                border: '1px solid var(--glass-border)'
+              }}
+              onClick={e => e.stopPropagation()}>
+              <div className="flex justify-between items-center">
+                <span className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>Verse {selectedVerse.number}</span>
+                <button onClick={() => setSelectedVerse(null)} className="p-1 rounded-full hover:opacity-80 transition-opacity" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}>
+                  <X size={18} />
+                </button>
+              </div>
+              <p className="arabic-text text-2xl text-right leading-[3.5rem]" style={{ color: 'var(--accent)' }}>{selectedVerse.text}</p>
+              <p className="text-sm italic pl-3 border-l-2" style={{ color: 'var(--text-secondary)', borderColor: 'var(--accent)' }}>{selectedVerse.translation}</p>
+              <div className="pt-2">
+                {explainingVerse ? (
+                  <div className="flex items-center gap-2" style={{ color: 'var(--text-secondary)' }}>
+                    <div className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--accent)', borderTopColor: 'transparent' }}></div>
+                    <span className="text-sm">Thinking...</span>
+                  </div>
+                ) : verseExplanation ? (
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>{verseExplanation}</p>
+                ) : null}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 };
 

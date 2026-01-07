@@ -70,8 +70,7 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, nextSurah, onStart }) =
                     }`}
                   style={{
                     backgroundColor: isRead ? 'var(--accent)' : 'var(--bg-secondary)',
-                    color: isRead ? 'white' : 'var(--text-secondary)',
-                    ringColor: 'var(--accent)'
+                    color: isRead ? 'white' : 'var(--text-secondary)'
                   }}
                 >
                   {isRead ? '✓' : ''}

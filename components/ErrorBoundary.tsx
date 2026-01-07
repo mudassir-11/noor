@@ -10,7 +10,7 @@ interface State {
     error: Error | null;
 }
 
-class ErrorBoundary extends Component<Props, State> {
+class ErrorBoundary extends React.Component<Props, State> {
     public state: State = { hasError: false, error: null };
 
     static getDerivedStateFromError(error: Error): State {
@@ -49,7 +49,7 @@ class ErrorBoundary extends Component<Props, State> {
                         Try Again
                     </button>
 
-                    {process.env.NODE_ENV === 'development' && this.state.error && (
+                    {import.meta.env.DEV && this.state.error && (
                         <details className="mt-8 text-left bg-red-50 p-4 rounded-xl max-w-sm">
                             <summary className="text-red-600 font-medium cursor-pointer">
                                 Error Details (Dev Only)

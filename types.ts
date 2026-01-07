@@ -1,3 +1,4 @@
+import React from 'react';
 
 export interface Verse {
   id: number;
@@ -56,4 +57,16 @@ export enum AppScreen {
   BOOKMARKS = 'BOOKMARKS',
   PRAYER_TIMES = 'PRAYER_TIMES',
   SEARCH = 'SEARCH'
+}
+
+export interface Mood {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+  color: string;
+  description: string;
+  verses: {
+    surah: number;
+    verse: number;
+  }[];
 }

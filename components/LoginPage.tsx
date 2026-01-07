@@ -38,19 +38,19 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-[#F8FAF9] to-[#E8F3F0] flex flex-col items-center justify-center px-6">
+        <div className="min-h-screen flex flex-col items-center justify-center px-6" style={{ backgroundColor: 'var(--bg-primary)' }}>
             {/* Logo */}
             <div className="mb-8 text-center">
-                <div className="w-20 h-20 bg-[#2D5A4C] rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-xl">
+                <div className="w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-xl" style={{ backgroundColor: 'var(--accent)' }}>
                     <BookOpen size={40} className="text-white" />
                 </div>
-                <h1 className="text-3xl font-bold text-[#2D5A4C]">Nur</h1>
-                <p className="text-[#6B8E85] text-sm">Enlighten Your Journey</p>
+                <h1 className="text-3xl font-bold" style={{ color: 'var(--accent)' }}>Noor</h1>
+                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Enlighten Your Journey</p>
             </div>
 
             {/* Form Card */}
-            <div className="w-full max-w-sm bg-white rounded-3xl p-8 shadow-2xl">
-                <h2 className="text-xl font-bold text-[#2D5A4C] mb-6 text-center">
+            <div className="w-full max-w-sm rounded-3xl p-8 shadow-2xl" style={{ backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-border)' }}>
+                <h2 className="text-xl font-bold mb-6 text-center" style={{ color: 'var(--text-primary)' }}>
                     {isSignUp ? 'Create Account' : 'Welcome Back'}
                 </h2>
 
@@ -62,7 +62,12 @@ const LoginPage: React.FC = () => {
                             placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-[#E8F3F0] focus:border-[#2D5A4C] outline-none transition-colors bg-[#F8FAF9]"
+                            className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 outline-none transition-colors"
+                            style={{
+                                backgroundColor: 'var(--bg-primary)',
+                                borderColor: 'var(--bg-secondary)',
+                                color: 'var(--text-primary)'
+                            }}
                             required
                         />
                     </div>
@@ -74,7 +79,12 @@ const LoginPage: React.FC = () => {
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-[#E8F3F0] focus:border-[#2D5A4C] outline-none transition-colors bg-[#F8FAF9]"
+                            className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 outline-none transition-colors"
+                            style={{
+                                backgroundColor: 'var(--bg-primary)',
+                                borderColor: 'var(--bg-secondary)',
+                                color: 'var(--text-primary)'
+                            }}
                             required
                             minLength={6}
                         />
