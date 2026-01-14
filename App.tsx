@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { TranslationProvider } from './contexts/TranslationContext';
@@ -158,6 +159,7 @@ const App: React.FC = () => {
       <AuthProvider>
         <TranslationProvider>
           <AppContent />
+          <SpeedInsights />
         </TranslationProvider>
       </AuthProvider>
     </ThemeProvider>
