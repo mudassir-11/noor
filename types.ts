@@ -70,3 +70,28 @@ export interface Mood {
     verse: number;
   }[];
 }
+
+// Names of Allah (Asma ul Husna) types
+export interface QuranReference {
+  surah: number;
+  verse: number;
+  text: string;
+}
+
+export interface Dua {
+  arabic: string;
+  transliteration: string;
+  meaning: string;
+}
+
+export interface NameOfAllah {
+  id: number;
+  number: number;
+  arabic: string;
+  transliteration: string;
+  meaning: string;
+  description: string | null;
+  quran_references: QuranReference[] | null;
+  duas: Dua[] | null;
+  practical_application: string | null;
+}

@@ -3,7 +3,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-api-key',
 }
 
 serve(async (req) => {
@@ -23,7 +23,9 @@ serve(async (req) => {
 Arabic: "${verse.text}"
 Translation: "${verse.translation}"
 
-Explain the deeper meaning of this verse in a calm and encouraging way for someone who is learning Quran. Keep it under 100 words.`;
+IMPORTANT: Write the explanation in Roman Urdu/Hindi (Romanized text like how South Asians text).
+Example style: "Yeh ayat humein sikhaati hai ke Allah par bharosa rakhna chahiye. Jab mushkilat aayein, sabr karo."
+Keep it warm, encouraging and under 100 words.`;
 
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
@@ -36,7 +38,7 @@ Explain the deeper meaning of this verse in a calm and encouraging way for someo
                 messages: [
                     {
                         role: 'system',
-                        content: 'You are a knowledgeable and gentle Islamic scholar helping someone learn the Quran. Be encouraging and warm.'
+                        content: 'You are a friendly Islamic teacher from South Asia. Write ALL responses in Roman Urdu/Hindi (Romanized text like how people text in Pakistan/India). Example: "Yeh ayat humein sikhaati hai ke hamesha Allah ka shukr ada karna chahiye." Never use Arabic or Urdu script - only Roman letters. Be warm and simple.'
                     },
                     {
                         role: 'user',

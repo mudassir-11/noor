@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { UserProgress, Surah } from '../types';
-import { Play, TrendingUp, Award, Clock, Flame, Calendar } from 'lucide-react';
+import { UserProgress, Surah, NameOfAllah } from '../types';
+import { Play, TrendingUp, Award, Clock, Flame, Calendar, Sparkles, ChevronRight } from 'lucide-react';
 import { getStreakData, StreakData } from '../services/streakService';
+import { fetchAllNames, getNameOfDay } from '../services/namesOfAllahService';
 import { useTheme } from '../contexts/ThemeContext';
+import NamesOfAllahModal from './NamesOfAllahModal';
 
 interface DashboardProps {
   progress: UserProgress;
@@ -16,15 +18,23 @@ const DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 const Dashboard: React.FC<DashboardProps> = ({ progress, nextSurah, onStart }) => {
   const { isDark } = useTheme();
   const [streak, setStreak] = useState<StreakData | null>(null);
+  const [names, setNames] = useState<NameOfAllah[]>([]);
+  const [isNamesModalOpen, setIsNamesModalOpen] = useState(false);
 
   useEffect(() => {
-    loadStreak();
+    loadData();
   }, []);
 
-  const loadStreak = async () => {
-    const data = await getStreakData();
-    setStreak(data);
+  const loadData = async () => {
+    const [streakData, namesData] = await Promise.all([
+      getStreakData(),
+      fetchAllNames()
+    ]);
+    setStreak(streakData);
+    setNames(namesData);
   };
+
+  const nameOfDay = getNameOfDay(names);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700 pb-24">
@@ -81,6 +91,50 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, nextSurah, onStart }) =
         </div>
       </section>
 
+      {/* Name of the Day Card */}
+      {nameOfDay && (
+        <section>
+          <div className="flex items-center gap-2 mb-3">
+            <Sparkles size={16} style={{ color: 'var(--accent)' }} />
+            <span className="text-sm font-bold uppercase" style={{ color: 'var(--text-secondary)' }}>Name of the Day</span>
+          </div>
+          <button
+            onClick={() => setIsNamesModalOpen(true)}
+            className="w-full p-5 rounded-3xl text-left transition-all hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group"
+            style={{
+              background: isDark
+                ? 'linear-gradient(135deg, rgba(45, 90, 76, 0.4) 0%, rgba(107, 142, 133, 0.2) 100%)'
+                : 'linear-gradient(135deg, rgba(45, 90, 76, 0.1) 0%, rgba(232, 243, 240, 0.8) 100%)',
+              border: '1px solid var(--accent)',
+              borderColor: isDark ? 'rgba(45, 90, 76, 0.5)' : 'rgba(45, 90, 76, 0.2)'
+            }}
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 rounded-full -mr-6 -mt-6 blur-2xl transition-all group-hover:scale-110" style={{ backgroundColor: 'var(--accent)', opacity: 0.1 }}></div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="arabic-text text-4xl" style={{ color: 'var(--accent)' }}>{nameOfDay.arabic}</span>
+                </div>
+                <p className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{nameOfDay.transliteration}</p>
+                <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{nameOfDay.meaning}</p>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-xs font-bold uppercase px-3 py-1 rounded-full" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--accent)' }}>
+                  #{nameOfDay.number}
+                </span>
+                <ChevronRight size={20} style={{ color: 'var(--accent)' }} />
+              </div>
+            </div>
+
+            <div className="mt-3 pt-3 border-t flex items-center justify-between" style={{ borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }}>
+              <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>Tap to explore all 99 names</span>
+              <span className="text-xs font-bold" style={{ color: 'var(--accent)' }}>Asma ul Husna →</span>
+            </div>
+          </button>
+        </section>
+      )}
+
       {/* Next Surah Card */}
       <section>
         <div className="flex justify-between items-end mb-4">
@@ -124,6 +178,13 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, nextSurah, onStart }) =
         </p>
         <p className="text-xs mt-2 font-bold" style={{ color: 'var(--text-secondary)' }}>— Quran 17:9</p>
       </section>
+
+      {/* Names of Allah Modal */}
+      <NamesOfAllahModal
+        names={names}
+        isOpen={isNamesModalOpen}
+        onClose={() => setIsNamesModalOpen(false)}
+      />
     </div>
   );
 };

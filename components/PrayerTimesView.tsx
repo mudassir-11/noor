@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { MapPin, Clock, Sunrise, Sun, Sunset, Moon, RefreshCw } from 'lucide-react';
+import { MapPin, Clock, Sunrise, Sun, Sunset, Moon, RefreshCw, Navigation, ExternalLink } from 'lucide-react';
 import { getUserLocation, getPrayerTimes, getNextPrayer, PrayerTimes, Location } from '../services/prayerTimesService';
+import { getNearbyMasjids, formatDistance, getDirectionsUrl, Masjid } from '../services/masjidService';
 import { useTheme } from '../contexts/ThemeContext';
 
 const PRAYER_ICONS: Record<string, React.ReactNode> = {
@@ -29,6 +30,8 @@ const PrayerTimesView: React.FC = () => {
     const [times, setTimes] = useState<PrayerTimes | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [nextPrayer, setNextPrayer] = useState<{ name: string; time: string } | null>(null);
+    const [masjids, setMasjids] = useState<Masjid[]>([]);
+    const [loadingMasjids, setLoadingMasjids] = useState(false);
 
     useEffect(() => {
         loadPrayerTimes();
@@ -57,7 +60,14 @@ const PrayerTimesView: React.FC = () => {
         }
 
         setLoading(false);
+
+        // Fetch nearby masjids in background
+        setLoadingMasjids(true);
+        const nearbyMasjids = await getNearbyMasjids(loc, 5); // 5km radius
+        setMasjids(nearbyMasjids);
+        setLoadingMasjids(false);
     };
+
 
     if (loading) {
         return (
@@ -169,6 +179,85 @@ const PrayerTimesView: React.FC = () => {
                         </div>
                     );
                 })}
+            </div>
+
+            {/* Nearby Masjids Section */}
+            <div className="mt-8">
+                <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                        <Navigation size={20} style={{ color: 'var(--accent)' }} />
+                        <h3 className="text-lg font-bold" style={{ color: 'var(--accent)' }}>
+                            Nearby Masjids
+                        </h3>
+                    </div>
+                    <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}>
+                        Within 5km
+                    </span>
+                </div>
+
+                {loadingMasjids ? (
+                    <div className="flex items-center justify-center py-8">
+                        <div className="w-8 h-8 border-3 border-[#2D5A4C] border-t-transparent rounded-full animate-spin"></div>
+                        <span className="ml-3 text-sm" style={{ color: 'var(--text-secondary)' }}>Finding masjids...</span>
+                    </div>
+                ) : masjids.length === 0 ? (
+                    <div
+                        className="p-6 rounded-2xl text-center"
+                        style={{ backgroundColor: isDark ? 'var(--bg-secondary)' : 'white', border: '1px solid var(--bg-secondary)' }}
+                    >
+                        <Navigation size={32} className="mx-auto mb-2 opacity-50" style={{ color: 'var(--text-secondary)' }} />
+                        <p style={{ color: 'var(--text-secondary)' }}>No masjids found nearby</p>
+                        <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>Try increasing your search radius</p>
+                    </div>
+                ) : (
+                    <div className="space-y-3">
+                        {masjids.slice(0, 5).map((masjid) => (
+                            <div
+                                key={masjid.id}
+                                className="p-4 rounded-2xl transition-all hover:scale-[1.01]"
+                                style={{
+                                    backgroundColor: isDark ? 'var(--bg-secondary)' : 'white',
+                                    border: '1px solid var(--bg-secondary)'
+                                }}
+                            >
+                                <div className="flex items-start justify-between">
+                                    <div className="flex-1 min-w-0">
+                                        <h4 className="font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
+                                            {masjid.name}
+                                        </h4>
+                                        <div className="flex items-center gap-2 mt-1">
+                                            <span
+                                                className="text-xs px-2 py-0.5 rounded-full font-medium"
+                                                style={{ backgroundColor: 'var(--accent)', color: 'white' }}
+                                            >
+                                                {formatDistance(masjid.distance)}
+                                            </span>
+                                            {masjid.address && (
+                                                <span className="text-xs truncate" style={{ color: 'var(--text-secondary)' }}>
+                                                    {masjid.address}
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <a
+                                        href={getDirectionsUrl(masjid)}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="ml-3 p-2 rounded-xl flex items-center gap-1 transition-all hover:scale-105"
+                                        style={{ backgroundColor: 'var(--accent)', color: 'white' }}
+                                    >
+                                        <ExternalLink size={16} />
+                                    </a>
+                                </div>
+                            </div>
+                        ))}
+                        {masjids.length > 5 && (
+                            <p className="text-center text-sm" style={{ color: 'var(--text-secondary)' }}>
+                                +{masjids.length - 5} more masjids found
+                            </p>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );

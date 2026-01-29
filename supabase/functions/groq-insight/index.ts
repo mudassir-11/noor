@@ -3,7 +3,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-api-key',
 }
 
 serve(async (req) => {
@@ -19,17 +19,19 @@ serve(async (req) => {
             throw new Error('GROQ_API_KEY is not set')
         }
 
-        const prompt = `Provide a spiritual insight and historical context for Surah ${surah.englishName} (${surah.name}).
-The meaning of the name is "${surah.meaning}". 
-The verses include themes like ${surah.description}.
+        const prompt = `Provide a spiritual insight for Surah ${surah.englishName} (${surah.name}).
+The meaning is "${surah.meaning}". Themes: ${surah.description}.
 
-Please provide the response in the following JSON format only, no other text:
+IMPORTANT: Write EVERYTHING in Roman Urdu/Hindi (Romanized text like how South Asians text). 
+Example style: "Yeh surah humein sikhaati hai ke Allah par bharosa rakhna chahiye. Jab mushkilat aayein, sabr karo aur dua karo."
+
+Respond in this JSON format only:
 {
-  "summary": "A concise summary of the surah's main message",
-  "historicalContext": "The background and period of revelation",
-  "spiritualLesson": "One key takeaway for the learner today",
+  "summary": "Main message in Roman Urdu style",
+  "historicalContext": "When and why revealed - in Roman Urdu style",
+  "spiritualLesson": "Key takeaway in Roman Urdu style",
   "keyVocabulary": [
-    {"word": "Arabic Word", "meaning": "English Meaning"}
+    {"word": "Tawakkul", "meaning": "Allah par bharosa"}
   ]
 }`;
 
@@ -46,7 +48,7 @@ Please provide the response in the following JSON format only, no other text:
                 messages: [
                     {
                         role: 'system',
-                        content: 'You are a knowledgeable Islamic scholar who provides spiritual insights about Quran. Always respond with valid JSON only.'
+                        content: 'You are a friendly Islamic teacher from South Asia. Write ALL responses in Roman Urdu/Hindi (Romanized text like how people text in Pakistan/India). Example: "Yeh ayat humein sikhaati hai ke hamesha Allah ka shukr ada karna chahiye." Never use Arabic or Urdu script - only Roman letters. Be warm and simple. Always respond with valid JSON only.'
                     },
                     {
                         role: 'user',
