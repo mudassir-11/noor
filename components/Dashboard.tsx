@@ -46,7 +46,7 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, nextSurah, onStart }) =
         <div className="grid grid-cols-3 gap-3 mt-6">
           <div className="p-4 rounded-3xl border flex flex-col items-center justify-center space-y-1" style={{ backgroundColor: isDark ? 'var(--bg-secondary)' : 'white', borderColor: 'var(--bg-secondary)' }}>
             <Flame size={22} className="text-orange-500" />
-            <span className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>{streak?.currentStreak || progress.dailyStreak}</span>
+            <span className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>{streak?.currentStreak ?? progress.dailyStreak}</span>
             <span className="text-[10px] font-medium uppercase" style={{ color: 'var(--text-secondary)' }}>Streak</span>
           </div>
           <div className="p-4 rounded-3xl border flex flex-col items-center justify-center space-y-1" style={{ backgroundColor: isDark ? 'var(--bg-secondary)' : 'white', borderColor: 'var(--bg-secondary)' }}>

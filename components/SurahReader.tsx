@@ -242,18 +242,20 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
                 arabic-text text-3xl leading-[4.5rem] text-right transition-all duration-300
                 ${isTestMode && !revealedVerses.has(verse.number)
                   ? 'text-transparent bg-[#1A2F2B]/5 rounded-xl select-none blur-sm'
-                  : 'text-[#1A2F2B] group-hover:text-[#2D5A4C]'}
-              `}>
+                  : 'group-hover:opacity-80'}
+              `}
+                style={{ color: isTestMode && !revealedVerses.has(verse.number) ? 'transparent' : 'var(--accent)' }}>
                 {isTestMode && !revealedVerses.has(verse.number) ? verse.text.replace(/[^\s]/g, '—') : verse.text}
               </p>
             </div>
             <div className="pl-12 transition-all duration-300">
               <p className={`
-                leading-relaxed text-sm italic font-light transition-colors
+                leading-relaxed text-lg italic font-light transition-colors
                 ${isTestMode && !revealedVerses.has(verse.number)
                   ? 'text-transparent bg-[#F1F5F4] rounded select-none'
-                  : 'text-[#6B8E85] group-hover:text-[#2D5A4C]'}
-              `}>
+                  : 'group-hover:opacity-80'}
+              `}
+                style={{ color: isTestMode && !revealedVerses.has(verse.number) ? 'transparent' : 'var(--accent)', opacity: 0.75 }}>
                 {loadingTranslation ? 'Loading...' : (customTranslations[verse.number] || verse.translation)}
               </p>
             </div>
