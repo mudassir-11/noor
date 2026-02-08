@@ -56,7 +56,18 @@ export enum AppScreen {
   SALAH_TRACKER = 'SALAH_TRACKER',
   BOOKMARKS = 'BOOKMARKS',
   PRAYER_TIMES = 'PRAYER_TIMES',
-  SEARCH = 'SEARCH'
+  SEARCH = 'SEARCH',
+  SUNNAH = 'SUNNAH',
+  SETTINGS = 'SETTINGS'
+}
+
+export interface Sunnah {
+  id: number;
+  title: string;
+  arabic: string | null;
+  description: string;
+  category: 'morning' | 'eating' | 'sleeping' | 'general' | 'cleanliness';
+  reference: string;
 }
 
 export interface Mood {

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, BookOpen, Moon, Sun, Bookmark, Clock } from 'lucide-react';
+import { Home, BookOpen, Moon, Sun, Bookmark, Clock, Star, Settings } from 'lucide-react';
 import { AppScreen } from '../types';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -11,7 +11,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children, activeScreen, onNavigate }) => {
-  const { isDark, toggleTheme } = useTheme();
+  const { isDark } = useTheme();
 
   return (
     <div className="flex flex-col min-h-screen max-w-md mx-auto shadow-2xl relative" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
@@ -29,12 +29,15 @@ const Layout: React.FC<LayoutProps> = ({ children, activeScreen, onNavigate }) =
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] mt-1 opacity-80" style={{ color: 'var(--text-secondary)' }}>Enlighten Your Journey</p>
         </div>
         <button
-          onClick={toggleTheme}
+          onClick={() => onNavigate(AppScreen.SETTINGS)}
           className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-90 shadow-sm border border-[var(--glass-border)]"
-          style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--accent)' }}
-          title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          style={{
+            backgroundColor: activeScreen === AppScreen.SETTINGS ? 'var(--accent)' : 'var(--bg-secondary)',
+            color: activeScreen === AppScreen.SETTINGS ? 'white' : 'var(--accent)'
+          }}
+          title="Settings"
         >
-          {isDark ? <Sun size={20} className="fill-current" /> : <Moon size={20} className="fill-current" />}
+          <Settings size={20} />
         </button>
       </header>
 
@@ -53,7 +56,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeScreen, onNavigate }) =
         {[
           { icon: Home, screen: AppScreen.DASHBOARD },
           { icon: BookOpen, screen: AppScreen.SURAH_LIST },
-          { icon: Bookmark, screen: AppScreen.BOOKMARKS },
+          { icon: Star, screen: AppScreen.SUNNAH },
           { icon: Moon, screen: AppScreen.SALAH_TRACKER },
           { icon: Clock, screen: AppScreen.PRAYER_TIMES }
         ].map((item, idx) => {

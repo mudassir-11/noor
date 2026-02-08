@@ -6,6 +6,7 @@ import { toggleBookmark, getBookmarks, Bookmark as BookmarkType } from '../servi
 import { audioPlayer } from '../services/audioService';
 import { recordReading } from '../services/streakService';
 import { useTranslation } from '../contexts/TranslationContext';
+import { useReciter } from '../contexts/ReciterContext';
 import { fetchSurahTranslation } from '../services/translationService';
 import { Globe } from 'lucide-react';
 
@@ -29,6 +30,7 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
   const [revealedVerses, setRevealedVerses] = useState<Set<number>>(new Set());
 
   const { language, setLanguage, getLanguageLabel } = useTranslation();
+  const { getReciterId } = useReciter();
   const [customTranslations, setCustomTranslations] = useState<Record<number, string>>({});
   const [loadingTranslation, setLoadingTranslation] = useState(false);
 
@@ -114,10 +116,99 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
     }
   };
 
+  const [isPlayingAll, setIsPlayingAll] = useState(false);
+  const shouldContinuePlayback = React.useRef(false);
+  const verseRefs = React.useRef<Record<number, HTMLDivElement | null>>({});
+
+  const scrollToVerse = (verseNumber: number) => {
+    const element = verseRefs.current[verseNumber];
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  // ... (existing effects) ...
+
+  useEffect(() => {
+    return () => {
+      // Cleanup on unmount
+      shouldContinuePlayback.current = false;
+      audioPlayer.stop();
+      audioPlayer.clearPreload();
+    };
+  }, []);
+
+  const stopPlayback = () => {
+    audioPlayer.stop();
+    audioPlayer.clearPreload();
+    setPlayingVerse(null);
+    shouldContinuePlayback.current = false;
+    setIsPlayingAll(false);
+    setAudioLoading(null);
+  };
+
+  const handlePlayAll = async () => {
+    if (isPlayingAll) {
+      stopPlayback();
+      return;
+    }
+
+    shouldContinuePlayback.current = true;
+    setIsPlayingAll(true);
+
+    // Sort verses by number to ensure correct order
+    const sortedVerses = [...surah.verses].sort((a, b) => a.number - b.number);
+    const reciterId = getReciterId();
+
+    // Preload first verse before starting
+    if (sortedVerses.length > 0) {
+      await audioPlayer.preload(surah.number, sortedVerses[0].number, reciterId);
+    }
+
+    for (let i = 0; i < sortedVerses.length; i++) {
+      const verse = sortedVerses[i];
+      if (!shouldContinuePlayback.current) break;
+
+      try {
+        setPlayingVerse(verse.number);
+        setAudioLoading(verse.number);
+        // Scroll to the current verse
+        scrollToVerse(verse.number);
+
+        // Preload NEXT verse while current one plays (if exists)
+        if (i + 1 < sortedVerses.length) {
+          audioPlayer.preload(surah.number, sortedVerses[i + 1].number, reciterId);
+        }
+
+        // play() resolves when audio ENDS, so we await it to play sequentially
+        await audioPlayer.play(surah.number, verse.number, reciterId);
+      } catch (e) {
+        console.error("Playback interrupted or failed", e);
+        break;
+      } finally {
+        setAudioLoading(null);
+      }
+    }
+
+    if (shouldContinuePlayback.current) {
+      setIsPlayingAll(false);
+      setPlayingVerse(null);
+      shouldContinuePlayback.current = false;
+    }
+  };
+
   const handlePlayAudio = async (e: React.MouseEvent, verse: Verse) => {
     e.stopPropagation();
 
-    // If this verse is currently playing, stop it
+    // If "Play All" is active, stop it first
+    if (isPlayingAll) {
+      stopPlayback();
+      // Don't start the individual verse immediately to avoid race conditions, 
+      // or just let the stop finish.
+      return;
+    }
+
+    // If this specific verse is currently playing (individually), stop it
     if (playingVerse === verse.number) {
       audioPlayer.stop();
       setPlayingVerse(null);
@@ -131,7 +222,7 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
 
     try {
       setPlayingVerse(verse.number);
-      await audioPlayer.play(surah.number, verse.number);
+      await audioPlayer.play(surah.number, verse.number, getReciterId());
       setPlayingVerse(null);
     } catch (error) {
       console.error('Audio playback failed:', error);
@@ -145,19 +236,31 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
     <div className="flex flex-col h-full -mx-6 pb-20 animate-in fade-in zoom-in-95 duration-500">
       {/* Sticky Reader Header */}
       <div className="px-6 py-4 bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-[#E8F3F0] flex items-center justify-between" style={{ backgroundColor: 'rgba(var(--bg-primary-rgb, 248, 250, 249), 0.8)' }}>
-        <button onClick={onBack} className="p-2 -ml-2 text-[#6B8E85] hover:text-[#2D5A4C]">
+        <button onClick={() => { stopPlayback(); onBack(); }} className="p-2 -ml-2 text-[#6B8E85] hover:text-[#2D5A4C]">
           <ChevronLeft size={24} />
         </button>
         <div className="flex flex-col items-center">
           <h3 className="font-bold text-[#2D5A4C]">{surah.englishName}</h3>
           <p className="text-[10px] text-[#6B8E85] uppercase tracking-widest">{surah.meaning}</p>
         </div>
-        <button
-          onClick={() => setShowInsightsModal(true)}
-          className="p-2 -mr-2 text-[#2D5A4C] hover:bg-[#E8F3F0] rounded-full transition-colors"
-        >
-          <Sparkles size={20} />
-        </button>
+        <div className="flex items-center gap-1 -mr-2">
+          <button
+            onClick={handlePlayAll}
+            className={`p-2 rounded-full transition-all ${isPlayingAll
+              ? 'text-[#2D5A4C] bg-[#E8F3F0] animate-pulse'
+              : 'text-[#2D5A4C] hover:bg-[#E8F3F0]'}`}
+            title={isPlayingAll ? "Stop Recitation" : "Play Surah"}
+          >
+            {isPlayingAll ? <Pause size={20} className="fill-current" /> : <Play size={20} className="fill-current" />}
+          </button>
+          <button
+            onClick={() => setShowInsightsModal(true)}
+            className="p-2 text-[#2D5A4C] hover:bg-[#E8F3F0] rounded-full transition-colors"
+            title="Surah Insights"
+          >
+            <Sparkles size={20} />
+          </button>
+        </div>
       </div>
       <div className="flex items-center justify-center gap-4 py-2">
         <button
@@ -203,7 +306,8 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
         {surah.verses.map((verse) => (
           <div
             key={verse.id}
-            className="group cursor-pointer space-y-4 pb-6 border-b border-[#E8F3F0]/50 last:border-0"
+            ref={(el) => { verseRefs.current[verse.number] = el; }}
+            className={`group cursor-pointer space-y-4 pb-6 border-b border-[#E8F3F0]/50 last:border-0 transition-all duration-300 ${playingVerse === verse.number ? 'bg-[#E8F3F0]/30 rounded-xl -mx-3 px-3 py-4' : ''}`}
             onClick={() => handleExplainVerse(verse)}
           >
             <div className="flex justify-between items-start gap-4">

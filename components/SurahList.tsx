@@ -1,16 +1,17 @@
 
 import React, { useState, useMemo } from 'react';
 import { Surah, UserProgress } from '../types';
-import { CheckCircle2, ArrowRight, Search, X } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Search, X, Bookmark } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface SurahListProps {
   surahs: Surah[];
   progress: UserProgress;
   onSelect: (surah: Surah) => void;
+  onBookmarksClick: () => void;
 }
 
-const SurahList: React.FC<SurahListProps> = ({ surahs, progress, onSelect }) => {
+const SurahList: React.FC<SurahListProps> = ({ surahs, progress, onSelect, onBookmarksClick }) => {
   const { isDark } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -49,32 +50,49 @@ const SurahList: React.FC<SurahListProps> = ({ surahs, progress, onSelect }) => 
         <p className="mt-2 text-sm font-medium tracking-wide opacity-80" style={{ color: 'var(--text-secondary)' }}>Start with the easy steps to reach profound wisdom.</p>
       </header>
 
-      {/* Search Bar */}
-      <div
-        className="relative flex items-center rounded-2xl overflow-hidden"
-        style={{
-          backgroundColor: isDark ? 'var(--bg-secondary)' : 'white',
-          border: '2px solid var(--bg-secondary)'
-        }}
-      >
-        <Search size={20} className="absolute left-4" style={{ color: 'var(--text-secondary)' }} />
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search Surah name or topic (mercy, patience...)"
-          className="w-full py-3 pl-12 pr-12 bg-transparent outline-none text-base"
-          style={{ color: 'var(--text-primary)' }}
-        />
-        {searchQuery && (
-          <button
-            onClick={clearSearch}
-            className="absolute right-4 p-1 rounded-full"
-            style={{ backgroundColor: 'var(--bg-secondary)' }}
-          >
-            <X size={16} style={{ color: 'var(--text-secondary)' }} />
-          </button>
-        )}
+      {/* Search Bar & Bookmark Actions */}
+      <div className="flex gap-3 h-14">
+        {/* Search Bar */}
+        <div
+          className="relative flex items-center rounded-2xl overflow-hidden flex-1"
+          style={{
+            backgroundColor: isDark ? 'var(--bg-secondary)' : 'white',
+            border: '2px solid var(--bg-secondary)'
+          }}
+        >
+          <Search size={20} className="absolute left-4" style={{ color: 'var(--text-secondary)' }} />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search Surah..."
+            className="w-full py-3 pl-12 pr-12 bg-transparent outline-none text-base"
+            style={{ color: 'var(--text-primary)' }}
+          />
+          {searchQuery && (
+            <button
+              onClick={clearSearch}
+              className="absolute right-4 p-1 rounded-full"
+              style={{ backgroundColor: 'var(--bg-secondary)' }}
+            >
+              <X size={16} style={{ color: 'var(--text-secondary)' }} />
+            </button>
+          )}
+        </div>
+
+        {/* Bookmark Trigger */}
+        <button
+          onClick={onBookmarksClick}
+          className="aspect-square h-full rounded-2xl flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
+          style={{
+            backgroundColor: isDark ? 'var(--bg-secondary)' : 'white',
+            border: '2px solid var(--bg-secondary)',
+            color: 'var(--accent)'
+          }}
+          title="Saved Bookmarks"
+        >
+          <Bookmark size={22} strokeWidth={2.5} />
+        </button>
       </div>
 
       {/* Search Results Count */}

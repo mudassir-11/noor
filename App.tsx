@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { TranslationProvider } from './contexts/TranslationContext';
+import { ReciterProvider } from './contexts/ReciterContext';
 import Layout from './components/Layout';
 import LoginPage from './components/LoginPage';
 import Dashboard from './components/Dashboard';
@@ -12,6 +12,8 @@ import SalahTracker from './components/SalahTracker';
 import BookmarksView from './components/BookmarksView';
 import PrayerTimesView from './components/PrayerTimesView';
 import SearchView from './components/SearchView';
+import SunnahView from './components/SunnahView';
+import SettingsView from './components/SettingsView';
 import { AppScreen, UserProgress, Surah } from './types';
 import { fetchSurahs } from './services/surahService';
 import { getProgress, updateProgress, markSurahComplete } from './services/progressService';
@@ -116,6 +118,7 @@ const AppContent: React.FC = () => {
           surahs={surahs}
           progress={progress}
           onSelect={handleStartSurah}
+          onBookmarksClick={() => setActiveScreen(AppScreen.BOOKMARKS)}
         />
       )}
       {activeScreen === AppScreen.READER && selectedSurah && (
@@ -146,6 +149,12 @@ const AppContent: React.FC = () => {
       {activeScreen === AppScreen.SEARCH && (
         <SearchView surahs={surahs} />
       )}
+      {activeScreen === AppScreen.SUNNAH && (
+        <SunnahView />
+      )}
+      {activeScreen === AppScreen.SETTINGS && (
+        <SettingsView />
+      )}
     </Layout>
   );
 };
@@ -157,7 +166,9 @@ const App: React.FC = () => {
     <ThemeProvider>
       <AuthProvider>
         <TranslationProvider>
-          <AppContent />
+          <ReciterProvider>
+            <AppContent />
+          </ReciterProvider>
         </TranslationProvider>
       </AuthProvider>
     </ThemeProvider>
