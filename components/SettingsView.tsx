@@ -5,14 +5,14 @@ import { useReciter, RECITERS, ReciterKey } from '../contexts/ReciterContext';
 import { useTranslation } from '../contexts/TranslationContext';
 import {
     User, Moon, Sun, Volume2, Globe, Info, LogOut, ChevronRight,
-    Settings, Sparkles, Heart
+    Settings, Sparkles, Heart, ArrowLeft
 } from 'lucide-react';
 
 interface SettingsViewProps {
     onBack?: () => void;
 }
 
-const SettingsView: React.FC<SettingsViewProps> = () => {
+const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
     const { isDark, toggleTheme } = useTheme();
     const { user, signOut } = useAuth();
     const { reciter, setReciter } = useReciter();
@@ -89,12 +89,22 @@ const SettingsView: React.FC<SettingsViewProps> = () => {
             {/* Header */}
             <section className="mt-4">
                 <div className="flex items-center gap-3">
-                    <div
-                        className="p-3 rounded-2xl"
-                        style={{ backgroundColor: 'var(--bg-secondary)' }}
-                    >
-                        <Settings size={24} style={{ color: 'var(--accent)' }} />
-                    </div>
+                    {onBack ? (
+                        <button
+                            onClick={onBack}
+                            className="p-3 rounded-2xl transition-all hover:scale-105 active:scale-95"
+                            style={{ backgroundColor: 'var(--bg-secondary)' }}
+                        >
+                            <ArrowLeft size={24} style={{ color: 'var(--accent)' }} />
+                        </button>
+                    ) : (
+                        <div
+                            className="p-3 rounded-2xl"
+                            style={{ backgroundColor: 'var(--bg-secondary)' }}
+                        >
+                            <Settings size={24} style={{ color: 'var(--accent)' }} />
+                        </div>
+                    )}
                     <div>
                         <h2 className="text-xl font-bold" style={{ color: 'var(--accent)' }}>
                             Settings

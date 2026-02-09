@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, ChevronRight, BookOpen, Heart, Lightbulb, Star } from 'lucide-react';
 import { NameOfAllah } from '../types';
 import { useTheme } from '../contexts/ThemeContext';
@@ -12,9 +12,28 @@ interface NamesOfAllahModalProps {
 
 const NamesOfAllahModal: React.FC<NamesOfAllahModalProps> = ({ names, isOpen, onClose, initialNameId }) => {
     const { isDark } = useTheme();
-    const [selectedName, setSelectedName] = useState<NameOfAllah | null>(
-        initialNameId ? names.find(n => n.id === initialNameId) || null : null
-    );
+    const [selectedName, setSelectedName] = useState<NameOfAllah | null>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const nameRefs = useRef<Record<number, HTMLDivElement | null>>({});
+
+    // Auto-scroll to and expand the initial name when modal opens
+    useEffect(() => {
+        if (isOpen && initialNameId) {
+            const name = names.find(n => n.id === initialNameId);
+            if (name) {
+                setSelectedName(name);
+                // Scroll to the name after a short delay to allow render
+                setTimeout(() => {
+                    const element = nameRefs.current[initialNameId];
+                    if (element && scrollContainerRef.current) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 100);
+            }
+        } else if (!isOpen) {
+            setSelectedName(null);
+        }
+    }, [isOpen, initialNameId, names]);
 
     if (!isOpen) return null;
 
@@ -55,9 +74,9 @@ const NamesOfAllahModal: React.FC<NamesOfAllahModalProps> = ({ names, isOpen, on
                 </div>
 
                 {/* Names Grid */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-4 space-y-3">
                     {names.map((name) => (
-                        <div key={name.id}>
+                        <div key={name.id} ref={(el) => { nameRefs.current[name.id] = el; }}>
                             {/* Name Card */}
                             <button
                                 onClick={() => handleNameClick(name)}

@@ -1,0 +1,221 @@
+
+import { DuaEntry } from '../types';
+
+export const duasData: DuaEntry[] = [
+    // Morning & Evening (Adhkar)
+    {
+        id: 1,
+        title: 'Morning Remembrance',
+        arabic: 'أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ',
+        transliteration: 'Asbahna wa-asbahal-mulku lillaah, walhamdu lillaah, laa ilaaha ill-Allaah wahdahu laa shareeka lah',
+        translation: 'We have entered the morning and at this very time the whole kingdom belongs to Allah. Praise is due to Allah. There is no god but Allah, the One; He has no partner.',
+        category: 'Morning & Evening',
+        reference: 'Sahih Muslim 2723'
+    },
+    {
+        id: 2,
+        title: 'Evening Remembrance',
+        arabic: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ',
+        transliteration: 'Amsayna wa-amsal-mulku lillaah, walhamdu lillaah, laa ilaaha ill-Allaah wahdahu laa shareeka lah',
+        translation: 'We have entered the evening and at this very time the whole kingdom belongs to Allah. Praise is due to Allah. There is no god but Allah, the One; He has no partner.',
+        category: 'Morning & Evening',
+        reference: 'Sahih Muslim 2723'
+    },
+
+    // Protection & Safety (Harm, Evil Eye, Fitna)
+    {
+        id: 3,
+        title: 'Protection from Harm',
+        arabic: 'بِسْمِ اللَّهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلاَ فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ',
+        transliteration: 'Bismillaahil-ladhee laa yadurru ma\'as-mihi shay\'un fil-ardi wa laa fis-samaa\'i wa huwas-samee\'ul-\'aleem',
+        translation: 'In the Name of Allah with Whose Name there is protection against every kind of harm in the earth or in the heaven, and He is the All-Hearing and All-Knowing.',
+        category: 'Protection & Safety',
+        reference: 'Sunan Abu Dawud 5088'
+    },
+    {
+        id: 4,
+        title: 'Protection from Evil Eye',
+        arabic: 'أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لاَمَّةٍ',
+        transliteration: 'A\'oodhu bi kalimaat Allaah al-taammati min kulli shaytaanin wa haammah wa min kulli \'aynin laammah',
+        translation: 'I seek refuge in the perfect words of Allah from every devil and every poisonous reptile, and from every evil eye.',
+        category: 'Protection & Safety',
+        reference: 'Sahih Bukhari 3371'
+    },
+    {
+        id: 5,
+        title: 'Protection from Fitnah (Trials)',
+        arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، وَمِنْ عَذَابِ النَّارِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ',
+        transliteration: 'Allaahumma innee a\'oodhu bika min \'adhaabil-qabr, wa min \'adhaabin-naar, wa min fitnatil-mahyaa wal-mamaat, wa min fitnatil-maseehid-dajjaal',
+        translation: 'O Allah, I seek refuge in You from the punishment of the grave, and from the punishment of the Fire, and from the trials of life and death, and from the evil of the trial of the False Messiah.',
+        category: 'Protection & Safety',
+        reference: 'Sahih Bukhari 1377'
+    },
+
+    // Family & Relationships (Partner, Parents, Children)
+    {
+        id: 6,
+        title: 'For Parents',
+        arabic: 'رَّبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا',
+        transliteration: 'Rabbi irhamhuma kama rabbayani sagheera',
+        translation: 'My Lord, have mercy upon them [my parents] as they brought me up [when I was] small.',
+        category: 'Family & Relationships',
+        reference: 'Quran 17:24'
+    },
+    {
+        id: 7,
+        title: 'For a Righteous Spouse & Children',
+        arabic: 'رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا',
+        transliteration: 'Rabbana hab lana min azwajina wa dhuriyyatina qurrata a\'yunin waj\'alna lil-muttaqina imama',
+        translation: 'Our Lord, grant us from among our wives and offspring comfort to our eyes and make us an example for the righteous.',
+        category: 'Family & Relationships',
+        reference: 'Quran 25:74'
+    },
+
+    // Career, Rizq & Decisions (Istikhara)
+    {
+        id: 8,
+        title: 'Asking for Goodness (Istikhara)',
+        arabic: 'اللَّهُمَّ إِنِّي أَسْتَخِيرُكَ بِعِلْمِكَ وَأَسْتَقْدِرُكَ بِقُدْرَتِكَ وَأَسْأَلُكَ مِنْ فَضْلِكَ الْعَظِيمِ',
+        transliteration: 'Allaahumma innee astakheeruka bi \'ilmika wa astaqdiruka bi qudratika wa as\'aluka min fadlikal-\'azeem',
+        translation: 'O Allah, I ask You to show me what is best through Your knowledge, and I ask You to empower me through Your power, and I ask You from Your immense favor.',
+        category: 'Career & Decisions',
+        reference: 'Sahih Bukhari 1166'
+    },
+    {
+        id: 9,
+        title: 'Increase in Knowledge & Rizq',
+        arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلاً مُتَقَبَّلاً',
+        transliteration: 'Allaahumma innee as\'aluka \'ilman naafi\'an, wa rizqan tayyiban, wa \'amalan mutaqabbalan',
+        translation: 'O Allah, I ask You for knowledge that is of benefit, a good provision, and deeds that will be accepted.',
+        category: 'Career & Decisions',
+        reference: 'Sunan Ibn Majah 925'
+    },
+    {
+        id: 10,
+        title: 'Removing Debt & Anxiety',
+        arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ',
+        transliteration: 'Allaahumma innee a\'oodhu bika minal-hammi wal-hazani, wal-\'ajzi wal-kasali, wal-bukhli wal-jubni, wa dala\'id-dayni wa ghalabatir-rijaal',
+        translation: 'O Allah, I seek refuge in You from anxiety and sorrow, weakness and laziness, miserliness and cowardice, the burden of debts and from being overpowered by men.',
+        category: 'Career & Decisions',
+        reference: 'Sahih Bukhari 6369'
+    },
+
+    // Health & Healing
+    {
+        id: 11,
+        title: 'When Visiting the Sick',
+        arabic: 'لاَ بَأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ',
+        transliteration: 'Laa ba\'sa tahoorun in shaa Allaah',
+        translation: 'Do not worry, it will be a purification (for you), if Allah wills.',
+        category: 'Illness & Healing',
+        reference: 'Sahih Bukhari 3616'
+    },
+    {
+        id: 12,
+        title: 'For Pain in the Body',
+        arabic: 'بِسْمِ اللَّهِ (3 مرات) أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ (7 مرات)',
+        transliteration: 'Bismillaah (3x). A\'oodhu billaahi wa qudratihi min sharri maa ajidu wa uhaadhir (7x)',
+        translation: 'In the Name of Allah (3x). I seek refuge in Allah and in His Power from the evil of what I find and of what I guard against (7x).',
+        category: 'Illness & Healing',
+        reference: 'Sahih Muslim 2202'
+    },
+
+    // Daily Life (Eating, Home, Bathroom)
+    {
+        id: 13,
+        title: 'Before Eating',
+        arabic: 'بِسْمِ اللَّهِ',
+        transliteration: 'Bismillah',
+        translation: 'In the name of Allah.',
+        category: 'Daily Life',
+        reference: 'Sunan Abu Dawud 3767'
+    },
+    {
+        id: 14,
+        title: 'After Eating',
+        arabic: 'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ',
+        transliteration: 'Alhamdulillahil-ladhi at\'amani hadha wa razaqanihi min ghayri hawlin minni wa la quwwah',
+        translation: 'All praise is due to Allah who fed me this and provided it for me without any might or power on my part.',
+        category: 'Daily Life',
+        reference: 'Sunan Abu Dawud 4023'
+    },
+    {
+        id: 15,
+        title: 'Entering the Home',
+        arabic: 'بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى رَبِّنَا تَوَكَّلْنَا',
+        transliteration: 'Bismillaahi walajnaa, wa bismillaahi kharajnaa, wa \'alaa Rabbinaa tawakkalnaa',
+        translation: 'In the Name of Allah we enter, in the Name of Allah we leave, and upon our Lord we depend.',
+        category: 'Daily Life',
+        reference: 'Sunan Abu Dawud 5096'
+    },
+    {
+        id: 16,
+        title: 'Leaving the Home',
+        arabic: 'بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ، لاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللَّهِ',
+        transliteration: 'Bismillaahi tawakkaltu \'alal-laah, laa hawla wa laa quwwata illaa billaah',
+        translation: 'In the Name of Allah, I have placed my trust in Allah, there is no might and no power except by Allah.',
+        category: 'Daily Life',
+        reference: 'Sunan Abu Dawud 5095'
+    },
+    {
+        id: 17,
+        title: 'Entering the Bathroom',
+        arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ',
+        transliteration: 'Allaahumma innee a\'oodhu bika minal-khubuthi wal-khabaa\'ith',
+        translation: 'O Allah, I seek refuge in You from the male and female unclean spirits.',
+        category: 'Daily Life',
+        reference: 'Sahih Bukhari 142'
+    },
+    {
+        id: 18,
+        title: 'Leaving the Bathroom',
+        arabic: 'غُفْرَانَكَ',
+        transliteration: 'Ghufraanak',
+        translation: 'I ask You (Allah) for forgiveness.',
+        category: 'Daily Life',
+        reference: 'Sunan Abu Dawud 30'
+    },
+
+    // Travel
+    {
+        id: 19,
+        title: 'Travel Dua',
+        arabic: 'سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ',
+        transliteration: 'Subhaanal-ladhee sakh-khara lanaa haadhaa wa maa kunnaa lahu muqrineen. Wa innaa ilaa Rabbinaa la munqaliboon',
+        translation: 'Glory unto Him Who has subjected this to us, and we were not capable of subduing it. And verily to our Lord we shall return.',
+        category: 'Travel',
+        reference: 'Quran 43:13-14'
+    },
+
+    // Forgiveness
+    {
+        id: 20,
+        title: 'Best Dua for Forgiveness (Sayyidul Istighfar)',
+        arabic: 'اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ',
+        transliteration: 'Allaahumma Anta Rabbee laa ilaaha illaa Ant, khalaqtanee wa anaa \'abduk, wa anaa \'alaa \'ahdika wa wa\'dika mas-tata\'t, a\'oodhu bika min sharri maa sana\'t, aboo\'u laka bi ni\'matika \'alay, wa aboo\'u laka bi dhanbee faghfir lee, fa innahu laa yaghfirudh-dhunooba illaa Ant',
+        translation: 'O Allah, You are my Lord, there is no god but You. You created me and I am Your slave, and I am abiding to Your covenant and promise as best as I can. I seek refuge in You from the evil of what I have done. I acknowledge Your grace upon me and I acknowledge my sin. So forgive me, for verily no one forgives sins except You.',
+        category: 'Forgiveness',
+        reference: 'Sahih Bukhari 6306'
+    },
+    {
+        id: 21,
+        title: 'Forgiveness for Believers',
+        arabic: 'رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ',
+        transliteration: 'Rabbana-ghfir lana wa li ikhwaninal-ladhina sabaquna bil-iman',
+        translation: 'Our Lord, forgive us and our brothers who preceded us in faith.',
+        category: 'Forgiveness',
+        reference: 'Quran 59:10'
+    }
+];
+
+export const duaCategories = [
+    'All',
+    'Morning & Evening',
+    'Protection & Safety',
+    'Family & Relationships',
+    'Career & Decisions',
+    'Illness & Healing',
+    'Daily Life',
+    'Travel',
+    'Forgiveness'
+];

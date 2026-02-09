@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { MapPin, Clock, Sunrise, Sun, Sunset, Moon, RefreshCw, Navigation, ExternalLink } from 'lucide-react';
+import { MapPin, Clock, Sunrise, Sun, Sunset, Moon, RefreshCw, Navigation, ExternalLink, ArrowLeft } from 'lucide-react';
 import { getUserLocation, getPrayerTimes, getNextPrayer, PrayerTimes, Location } from '../services/prayerTimesService';
 import { getNearbyMasjids, formatDistance, getDirectionsUrl, Masjid } from '../services/masjidService';
 import { useTheme } from '../contexts/ThemeContext';
@@ -23,7 +23,11 @@ const PRAYER_COLORS: Record<string, string> = {
     Isha: 'from-indigo-600 to-purple-800'
 };
 
-const PrayerTimesView: React.FC = () => {
+interface PrayerTimesViewProps {
+    onBack: () => void;
+}
+
+const PrayerTimesView: React.FC<PrayerTimesViewProps> = ({ onBack }) => {
     const { isDark } = useTheme();
     const [loading, setLoading] = useState(true);
     const [location, setLocation] = useState<Location | null>(null);
@@ -109,11 +113,17 @@ const PrayerTimesView: React.FC = () => {
 
     return (
         <div className="space-y-6 pb-24 animate-in fade-in duration-500">
-            {/* Header with location */}
+            {/* Header with back button and location */}
             <div className="flex items-center justify-between">
-                <div>
-                    <h2 className="text-xl font-bold" style={{ color: 'var(--accent)' }}>Prayer Times</h2>
-                    <div className="flex items-center gap-1 mt-1" style={{ color: 'var(--text-secondary)' }}>
+                <div className="flex items-center gap-3">
+                    <button
+                        onClick={onBack}
+                        className="p-3 rounded-2xl transition-all hover:scale-105 active:scale-95"
+                        style={{ backgroundColor: 'var(--bg-secondary)' }}
+                    >
+                        <ArrowLeft size={20} style={{ color: 'var(--accent)' }} />
+                    </button>
+                    <div className="flex items-center gap-1" style={{ color: 'var(--text-secondary)' }}>
                         <MapPin size={14} />
                         <span className="text-sm">{times.location}</span>
                     </div>

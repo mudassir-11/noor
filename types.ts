@@ -58,7 +58,9 @@ export enum AppScreen {
   PRAYER_TIMES = 'PRAYER_TIMES',
   SEARCH = 'SEARCH',
   SUNNAH = 'SUNNAH',
-  SETTINGS = 'SETTINGS'
+  SETTINGS = 'SETTINGS',
+  LEARN_SALAH = 'LEARN_SALAH',
+  DUAS = 'DUAS'
 }
 
 export interface Sunnah {
@@ -66,7 +68,7 @@ export interface Sunnah {
   title: string;
   arabic: string | null;
   description: string;
-  category: 'morning' | 'eating' | 'sleeping' | 'general' | 'cleanliness';
+  category: 'morning' | 'eating' | 'sleeping' | 'general' | 'cleanliness' | 'prayer' | 'travel' | 'social' | 'family' | 'dhikr' | 'friday' | 'fasting';
   reference: string;
 }
 
@@ -105,4 +107,14 @@ export interface NameOfAllah {
   quran_references: QuranReference[] | null;
   duas: Dua[] | null;
   practical_application: string | null;
+}
+
+export interface DuaEntry {
+  id: number;
+  title: string;
+  arabic: string;
+  transliteration: string;
+  translation: string;
+  category: string;
+  reference: string;
 }

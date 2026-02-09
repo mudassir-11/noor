@@ -14,6 +14,8 @@ import PrayerTimesView from './components/PrayerTimesView';
 import SearchView from './components/SearchView';
 import SunnahView from './components/SunnahView';
 import SettingsView from './components/SettingsView';
+import LearnSalahView from './components/LearnSalahView';
+import DuasView from './components/DuasView';
 import { AppScreen, UserProgress, Surah } from './types';
 import { fetchSurahs } from './services/surahService';
 import { getProgress, updateProgress, markSurahComplete } from './services/progressService';
@@ -129,7 +131,7 @@ const AppContent: React.FC = () => {
         />
       )}
       {activeScreen === AppScreen.SALAH_TRACKER && (
-        <SalahTracker />
+        <SalahTracker onNavigate={setActiveScreen} />
       )}
       {activeScreen === AppScreen.BOOKMARKS && (
         <BookmarksView />
@@ -144,7 +146,7 @@ const AppContent: React.FC = () => {
         </div>
       )}
       {activeScreen === AppScreen.PRAYER_TIMES && (
-        <PrayerTimesView />
+        <PrayerTimesView onBack={() => setActiveScreen(AppScreen.SALAH_TRACKER)} />
       )}
       {activeScreen === AppScreen.SEARCH && (
         <SearchView surahs={surahs} />
@@ -153,7 +155,14 @@ const AppContent: React.FC = () => {
         <SunnahView />
       )}
       {activeScreen === AppScreen.SETTINGS && (
-        <SettingsView />
+        <SettingsView onBack={() => setActiveScreen(AppScreen.DASHBOARD)} />
+      )}
+      {activeScreen === AppScreen.DUAS && (
+        <DuasView />
+      )}
+
+      {activeScreen === AppScreen.LEARN_SALAH && (
+        <LearnSalahView onBack={() => setActiveScreen(AppScreen.SALAH_TRACKER)} />
       )}
     </Layout>
   );

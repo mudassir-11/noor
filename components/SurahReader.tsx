@@ -35,6 +35,9 @@ const SurahReader: React.FC<SurahReaderProps> = ({ surah, onBack, onComplete }) 
   const [loadingTranslation, setLoadingTranslation] = useState(false);
 
   useEffect(() => {
+    // Scroll to top when surah opens
+    window.scrollTo({ top: 0, behavior: 'instant' });
+
     async function loadData() {
       // Record that user is reading today (for streak)
       await recordReading();

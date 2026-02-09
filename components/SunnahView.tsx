@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Sunnah } from '../types';
 import { sunnahData, categoryLabels, categoryOrder } from '../data/sunnahData';
 import { useTheme } from '../contexts/ThemeContext';
-import { ChevronDown, ChevronUp, BookOpen, Search, X, Sparkles, ArrowRight } from 'lucide-react';
+import { ChevronDown, ChevronUp, Search, X, Sparkles } from 'lucide-react';
 
 const SunnahView: React.FC = () => {
     const { isDark } = useTheme();
@@ -53,26 +53,8 @@ const SunnahView: React.FC = () => {
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500 pb-24">
-            {/* Header */}
-            <section className="mt-4 space-y-4">
-                <div className="flex items-center gap-3">
-                    <div
-                        className="p-3 rounded-2xl"
-                        style={{ backgroundColor: 'var(--bg-secondary)' }}
-                    >
-                        <BookOpen size={24} style={{ color: 'var(--accent)' }} />
-                    </div>
-                    <div>
-                        <h2 className="text-xl font-bold" style={{ color: 'var(--accent)' }}>
-                            Daily Sunnahs
-                        </h2>
-                        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                            Follow the Prophet's (ﷺ) way
-                        </p>
-                    </div>
-                </div>
-
-                {/* Search Bar */}
+            {/* Search Bar */}
+            <section className="mt-2">
                 <div className="relative flex items-center rounded-2xl overflow-hidden"
                     style={{
                         backgroundColor: isDark ? 'var(--bg-secondary)' : 'white',
@@ -122,13 +104,31 @@ const SunnahView: React.FC = () => {
                                 {categoryLabels[sunnahOfTheDay.category]}
                             </span>
                             <h3 className="text-2xl font-bold mb-2">{sunnahOfTheDay.title}</h3>
-                            <p className="text-white/90 text-sm line-clamp-2 leading-relaxed">
+
+                            {/* Arabic text if available */}
+                            {sunnahOfTheDay.arabic && expandedSunnah === sunnahOfTheDay.id && (
+                                <p className="text-xl text-white/95 font-arabic text-right mb-3 leading-loose" dir="rtl">
+                                    {sunnahOfTheDay.arabic}
+                                </p>
+                            )}
+
+                            <p className={`text-white/90 text-sm leading-relaxed ${expandedSunnah === sunnahOfTheDay.id ? '' : 'line-clamp-2'}`}>
                                 {sunnahOfTheDay.description}
                             </p>
-                            <div className="mt-4 flex items-center text-xs font-bold opacity-80 gap-1">
-                                <span>Read more</span>
-                                <ArrowRight size={14} />
-                            </div>
+
+                            {/* Reference when expanded */}
+                            {expandedSunnah === sunnahOfTheDay.id && (
+                                <p className="text-xs mt-3 opacity-70 font-medium">
+                                    📚 {sunnahOfTheDay.reference}
+                                </p>
+                            )}
+
+                            {/* Click hint when collapsed */}
+                            {expandedSunnah !== sunnahOfTheDay.id && (
+                                <div className="mt-3 text-xs font-bold opacity-60">
+                                    Tap to expand
+                                </div>
+                            )}
                         </div>
                     </div>
                 </section>

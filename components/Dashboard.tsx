@@ -20,6 +20,7 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, nextSurah, onStart }) =
   const [streak, setStreak] = useState<StreakData | null>(null);
   const [names, setNames] = useState<NameOfAllah[]>([]);
   const [isNamesModalOpen, setIsNamesModalOpen] = useState(false);
+  const [selectedNameId, setSelectedNameId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     loadData();
@@ -99,7 +100,10 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, nextSurah, onStart }) =
             <span className="text-sm font-bold uppercase" style={{ color: 'var(--text-secondary)' }}>Name of the Day</span>
           </div>
           <button
-            onClick={() => setIsNamesModalOpen(true)}
+            onClick={() => {
+              setSelectedNameId(nameOfDay.id);
+              setIsNamesModalOpen(true);
+            }}
             className="w-full p-5 rounded-3xl text-left transition-all hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group"
             style={{
               background: isDark
@@ -183,7 +187,11 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, nextSurah, onStart }) =
       <NamesOfAllahModal
         names={names}
         isOpen={isNamesModalOpen}
-        onClose={() => setIsNamesModalOpen(false)}
+        onClose={() => {
+          setIsNamesModalOpen(false);
+          setSelectedNameId(undefined);
+        }}
+        initialNameId={selectedNameId}
       />
     </div>
   );

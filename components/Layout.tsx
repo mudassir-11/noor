@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, BookOpen, Moon, Sun, Bookmark, Clock, Star, Settings } from 'lucide-react';
+import { Home, BookOpen, Moon, Star, Settings, Heart } from 'lucide-react';
 import { AppScreen } from '../types';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -13,20 +13,48 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children, activeScreen, onNavigate }) => {
   const { isDark } = useTheme();
 
+  // Page titles and descriptions
+  const pageTitles: Record<AppScreen, { title: string; subtitle?: string }> = {
+    [AppScreen.DASHBOARD]: { title: 'Noor', subtitle: 'Enlighten Your Journey' },
+    [AppScreen.SURAH_LIST]: { title: 'Quran', subtitle: 'Read & Learn' },
+    [AppScreen.READER]: { title: 'Quran', subtitle: 'Read & Learn' },
+    [AppScreen.SUNNAH]: { title: 'Sunnah', subtitle: 'Prophetic Traditions' },
+    [AppScreen.SALAH_TRACKER]: { title: 'Salah', subtitle: 'Prayer & Tracker' },
+    [AppScreen.PRAYER_TIMES]: { title: 'Prayer Times', subtitle: 'Times & Masjids' },
+    [AppScreen.DUAS]: { title: 'Duas', subtitle: 'Supplications' },
+    [AppScreen.LEARN_SALAH]: { title: 'Learn Salah', subtitle: 'Step by Step Guide' },
+    [AppScreen.BOOKMARKS]: { title: 'Bookmarks', subtitle: 'Your Saved Verses' },
+    [AppScreen.SEARCH]: { title: 'Search', subtitle: 'Find Verses' },
+    [AppScreen.SETTINGS]: { title: 'Settings', subtitle: 'Preferences' },
+    [AppScreen.INSIGHTS]: { title: 'Insights', subtitle: 'Your Progress' },
+  };
+
+  const currentPage = pageTitles[activeScreen] || { title: 'Noor' };
+
   return (
     <div className="flex flex-col min-h-screen max-w-md mx-auto shadow-2xl relative" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
       {/* Header */}
-      {/* Header */}
-      <header className="p-6 pb-2 sticky top-0 z-10 flex items-center justify-between transition-all duration-300 backdrop-blur-xl"
+      <header className="p-6 pb-4 sticky top-0 z-10 flex items-center justify-between transition-all duration-300 backdrop-blur-xl"
         style={{
           borderBottom: '1px solid var(--glass-border)',
-          backgroundColor: 'rgba(var(--bg-primary), 0.5)' // semi-transparent
+          backgroundColor: 'rgba(var(--bg-primary), 0.5)',
+          marginBottom: '8px'
         }}>
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]">
-            Noor
-          </h1>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] mt-1 opacity-80" style={{ color: 'var(--text-secondary)' }}>Enlighten Your Journey</p>
+          {activeScreen === AppScreen.DASHBOARD ? (
+            <h1 className="text-3xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)]">
+              Noor
+            </h1>
+          ) : (
+            <h1 className="text-3xl font-bold" style={{ color: 'var(--accent)' }}>
+              {currentPage.title}
+            </h1>
+          )}
+          {currentPage.subtitle && (
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] mt-1 opacity-80" style={{ color: 'var(--text-secondary)' }}>
+              {currentPage.subtitle}
+            </p>
+          )}
         </div>
         <button
           onClick={() => onNavigate(AppScreen.SETTINGS)}
@@ -56,9 +84,9 @@ const Layout: React.FC<LayoutProps> = ({ children, activeScreen, onNavigate }) =
         {[
           { icon: Home, screen: AppScreen.DASHBOARD },
           { icon: BookOpen, screen: AppScreen.SURAH_LIST },
+          { icon: Heart, screen: AppScreen.DUAS },
           { icon: Star, screen: AppScreen.SUNNAH },
-          { icon: Moon, screen: AppScreen.SALAH_TRACKER },
-          { icon: Clock, screen: AppScreen.PRAYER_TIMES }
+          { icon: Moon, screen: AppScreen.SALAH_TRACKER }
         ].map((item, idx) => {
           const isActive = activeScreen === item.screen;
           return (
