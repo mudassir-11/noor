@@ -75,14 +75,52 @@ const LearnSalahView: React.FC<LearnSalahViewProps> = ({ onBack }) => {
                             const prayer = prayers.find(p => p.id === selectedPrayer);
                             if (!prayer) return null;
                             return (
-                                <div className="space-y-2">
-                                    <h4 className="font-bold" style={{ color: 'var(--accent)' }}>{prayer.name} Prayer</h4>
+                                <div className="space-y-3">
+                                    <h4 className="font-bold text-lg" style={{ color: 'var(--accent)' }}>{prayer.name} Prayer</h4>
                                     <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{prayer.description}</p>
                                     <div className="flex gap-4 text-sm">
                                         <span><strong>Fard:</strong> {prayer.fard} rakats</span>
                                         {prayer.sunnah.before > 0 && <span><strong>Sunnah Before:</strong> {prayer.sunnah.before}</span>}
                                         {prayer.sunnah.after > 0 && <span><strong>Sunnah After:</strong> {prayer.sunnah.after}</span>}
                                     </div>
+
+                                    {/* Fard Benefits */}
+                                    <div
+                                        className="p-3 rounded-xl mt-2"
+                                        style={{ backgroundColor: 'rgba(var(--accent-rgb), 0.1)', border: '1px solid rgba(var(--accent-rgb), 0.2)' }}
+                                    >
+                                        <h5 className="text-xs font-bold uppercase mb-2" style={{ color: 'var(--accent)' }}>
+                                            ✨ Benefits of Fard
+                                        </h5>
+                                        <ul className="space-y-1.5">
+                                            {prayer.fardBenefits.map((benefit, i) => (
+                                                <li key={i} className="flex gap-2 text-sm" style={{ color: 'var(--text-primary)' }}>
+                                                    <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--accent)' }}>•</span>
+                                                    <span>{benefit}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    {/* Sunnah Benefits */}
+                                    {(prayer.sunnah.before > 0 || prayer.sunnah.after > 0) && (
+                                        <div
+                                            className="p-3 rounded-xl"
+                                            style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--glass-border)' }}
+                                        >
+                                            <h5 className="text-xs font-bold uppercase mb-2" style={{ color: 'var(--text-secondary)' }}>
+                                                📿 Benefits of Sunnah
+                                            </h5>
+                                            <ul className="space-y-1.5">
+                                                {prayer.sunnahBenefits.map((benefit, i) => (
+                                                    <li key={i} className="flex gap-2 text-sm" style={{ color: 'var(--text-primary)' }}>
+                                                        <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--accent)' }}>•</span>
+                                                        <span>{benefit}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
                                 </div>
                             );
                         })()}

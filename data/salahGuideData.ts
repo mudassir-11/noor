@@ -28,6 +28,8 @@ export interface Prayer {
     fard: number;
     sunnah: { before: number; after: number };
     description: string;
+    fardBenefits: string[];
+    sunnahBenefits: string[];
 }
 
 // The 5 daily prayers
@@ -39,7 +41,17 @@ export const prayers: Prayer[] = [
         rakats: 2,
         fard: 2,
         sunnah: { before: 2, after: 0 },
-        description: 'The dawn prayer, performed before sunrise'
+        description: 'The dawn prayer, performed before sunrise',
+        fardBenefits: [
+            'Whoever prays Fajr is under the protection of Allah (Sahih Muslim 657)',
+            'Fajr and Isha in congregation equal praying the entire night (Sahih Muslim 656)',
+            'Light on the Day of Judgment for those who walk to Fajr in darkness (Sunan Abu Dawud 561)',
+            'Angels of the day and night witness this prayer (Sahih Bukhari 555)'
+        ],
+        sunnahBenefits: [
+            'The two rak\'ah before Fajr are better than the world and everything in it (Sahih Muslim 725)',
+            'The Prophet (PBUH) never left these sunnah rak\'ah, even while traveling (Sahih Bukhari 1169)'
+        ]
     },
     {
         id: 'dhuhr',
@@ -48,7 +60,16 @@ export const prayers: Prayer[] = [
         rakats: 4,
         fard: 4,
         sunnah: { before: 4, after: 2 },
-        description: 'The midday prayer, performed after the sun passes its zenith'
+        description: 'The midday prayer, performed after the sun passes its zenith',
+        fardBenefits: [
+            'One of the five pillars — the first thing asked about on the Day of Judgment (Sunan Abu Dawud 864)',
+            'Prayers are an expiation for sins committed between them (Sahih Muslim 228)',
+            'The best deed in the sight of Allah after the declaration of faith (Sahih Bukhari 527)'
+        ],
+        sunnahBenefits: [
+            'Whoever prays 4 rak\'ah before Dhuhr and 4 after, Allah will make Hellfire Haram for them (Jami at-Tirmidhi 428)',
+            'Whoever guards 4 rak\'ah before Dhuhr will enter Jannah (Sunan Abu Dawud 1269)'
+        ]
     },
     {
         id: 'asr',
@@ -57,7 +78,16 @@ export const prayers: Prayer[] = [
         rakats: 4,
         fard: 4,
         sunnah: { before: 0, after: 0 },
-        description: 'The afternoon prayer, performed in the late afternoon'
+        description: 'The afternoon prayer, performed in the late afternoon',
+        fardBenefits: [
+            'Whoever misses Asr prayer, it is as if he lost his family and wealth (Sahih Bukhari 552)',
+            'Whoever prays the two cool prayers (Fajr and Asr) will enter Jannah (Sahih Bukhari 574)',
+            'The angels of day and night meet at this prayer, testifying for you before Allah (Sahih Bukhari 555)'
+        ],
+        sunnahBenefits: [
+            'May Allah have mercy on the one who prays 4 rak\'ah before Asr (Sunan Abu Dawud 1271)',
+            'Though not strongly emphasized, the reward is still great for any voluntary prayer'
+        ]
     },
     {
         id: 'maghrib',
@@ -66,7 +96,16 @@ export const prayers: Prayer[] = [
         rakats: 3,
         fard: 3,
         sunnah: { before: 0, after: 2 },
-        description: 'The evening prayer, performed just after sunset'
+        description: 'The evening prayer, performed just after sunset',
+        fardBenefits: [
+            'Should be prayed immediately at sunset — delaying it is disliked (Sahih Bukhari 560)',
+            'Completes the chain of daily prayers that are expiation for sins between them (Sahih Muslim 228)',
+            'Part of the 5 daily prayers that are like a river washing away sins five times a day (Sahih Bukhari 528)'
+        ],
+        sunnahBenefits: [
+            'The 2 rak\'ah after Maghrib are among the 12 regular sunnah that earn a house in Jannah (Sahih Muslim 728)',
+            'Reciting Surah Al-Kafirun and Surah Al-Ikhlas in these sunnah is recommended (Sunan Ibn Majah 1166)'
+        ]
     },
     {
         id: 'isha',
@@ -75,7 +114,16 @@ export const prayers: Prayer[] = [
         rakats: 4,
         fard: 4,
         sunnah: { before: 0, after: 2 },
-        description: 'The night prayer, performed after twilight disappears'
+        description: 'The night prayer, performed after twilight disappears',
+        fardBenefits: [
+            'Praying Isha in congregation equals praying half the night (Sahih Muslim 656)',
+            'Combined with Fajr in congregation, it equals praying the whole night (Sahih Muslim 656)',
+            'This is the hardest prayer for the hypocrites — praying it shows true faith (Sahih Bukhari 657)'
+        ],
+        sunnahBenefits: [
+            'The 2 rak\'ah after Isha are among the 12 regular sunnah that build a house in Jannah (Sahih Muslim 728)',
+            'Praying Witr after Isha is highly recommended — the Prophet never left it (Sahih Bukhari 998)'
+        ]
     }
 ];
 
