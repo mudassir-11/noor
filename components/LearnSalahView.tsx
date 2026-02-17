@@ -219,7 +219,7 @@ const LearnSalahView: React.FC<LearnSalahViewProps> = ({ onBack }) => {
                                                         {/* Posture */}
                                                         <div>
                                                             <h5 className="text-xs font-bold uppercase mb-2" style={{ color: 'var(--text-secondary)' }}>
-                                                                🧍 Posture
+                                                                ➤ Posture
                                                             </h5>
                                                             <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
                                                                 {step.posture}

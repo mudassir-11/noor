@@ -827,6 +827,168 @@ export const sunnahData: Sunnah[] = [
         description: 'The Prophet (PBUH) said: "None of you truly believes until he loves for his brother what he loves for himself."',
         category: 'general',
         reference: 'Sahih Bukhari 13'
+    },
+
+    // Additional Sunnahs
+    {
+        id: 101,
+        title: 'Recite Surah Mulk Before Sleep',
+        arabic: null,
+        description: 'The Prophet (PBUH) said: "There is a surah in the Quran which is only thirty verses. It will intercede for a man until he is forgiven." (Surah Al-Mulk, 67)',
+        category: 'sleeping',
+        reference: 'Sunan Abu Dawud 1400'
+    },
+    {
+        id: 102,
+        title: 'Pray Duha (Forenoon Prayer)',
+        arabic: null,
+        description: 'The Prophet (PBUH) said: "In the morning charity is due from every bone in the body. Two rak\'ah of Duha is sufficient for this."',
+        category: 'prayer',
+        reference: 'Sahih Muslim 720'
+    },
+    {
+        id: 103,
+        title: 'Say SubhanAllah 100 Times',
+        arabic: 'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
+        description: 'Whoever says "SubhanAllahi wa bihamdihi" 100 times in the morning and evening, none shall come on the Day of Resurrection with anything better, except one who has said the same or more.',
+        category: 'dhikr',
+        reference: 'Sahih Muslim 2692'
+    },
+    {
+        id: 104,
+        title: 'Say La ilaha illallah 100 Times',
+        arabic: 'لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ',
+        description: 'Whoever says this 100 times gets the reward of freeing 10 slaves, 100 good deeds, 100 sins removed, and is protected from Shaytan for the whole day.',
+        category: 'dhikr',
+        reference: 'Sahih Bukhari 3293'
+    },
+    {
+        id: 105,
+        title: 'Eat Dates in Odd Numbers',
+        arabic: null,
+        description: 'The Prophet (PBUH) used to eat dates in odd numbers (1, 3, 5, 7) especially before going out for Eid prayer.',
+        category: 'eating',
+        reference: 'Sahih Bukhari 953'
+    },
+    {
+        id: 106,
+        title: 'Pray Tahajjud (Night Prayer)',
+        arabic: null,
+        description: 'The Prophet (PBUH) said: "The best prayer after the obligatory prayer is the night prayer (Tahajjud)."',
+        category: 'prayer',
+        reference: 'Sahih Muslim 1163'
+    },
+    {
+        id: 107,
+        title: 'Pray Witr Before Sleeping',
+        arabic: null,
+        description: 'The Prophet (PBUH) said: "Make Witr the last of your night prayer." If you fear you won\'t wake up, pray it before sleeping.',
+        category: 'prayer',
+        reference: 'Sahih Bukhari 998'
+    },
+    {
+        id: 108,
+        title: 'Recite Surah Sajdah Before Sleep',
+        arabic: null,
+        description: 'The Prophet (PBUH) would not sleep until he had recited Surah As-Sajdah (32) and Surah Al-Mulk (67).',
+        category: 'sleeping',
+        reference: 'Jami at-Tirmidhi 2892'
+    },
+    {
+        id: 109,
+        title: 'Give Charity Daily',
+        arabic: null,
+        description: 'The Prophet (PBUH) said: "Every day the sun rises, charity is due on every joint of a person\'s body." Even a smile, a kind word, or removing harm from the road counts.',
+        category: 'general',
+        reference: 'Sahih Bukhari 2989'
+    },
+    {
+        id: 110,
+        title: 'Walk to the Masjid',
+        arabic: null,
+        description: 'Every step to the masjid raises your rank and removes a sin. The farther the distance, the greater the reward.',
+        category: 'prayer',
+        reference: 'Sahih Muslim 662'
+    },
+    {
+        id: 111,
+        title: 'Do Not Waste Food',
+        arabic: null,
+        description: 'The Prophet (PBUH) said: "If a morsel of food falls, pick it up, clean it, and eat it. Do not leave it for Shaytan."',
+        category: 'eating',
+        reference: 'Sahih Muslim 2033'
+    },
+    {
+        id: 112,
+        title: 'Use Perfume (Attar)',
+        arabic: null,
+        description: 'The Prophet (PBUH) loved perfume and would not refuse it when offered. He said: "Whoever is offered perfume, should not refuse it."',
+        category: 'cleanliness',
+        reference: 'Sahih Muslim 2253'
+    },
+    {
+        id: 113,
+        title: 'Look After Orphans',
+        arabic: null,
+        description: 'The Prophet (PBUH) said: "I and the one who looks after an orphan will be like these two in Paradise," showing his index and middle finger.',
+        category: 'social',
+        reference: 'Sahih Bukhari 5304'
+    },
+    {
+        id: 114,
+        title: 'Return Trusts (Amanah)',
+        arabic: null,
+        description: 'The Prophet (PBUH) said: "Pay the trust to the one who entrusted you, and do not betray the one who betrayed you."',
+        category: 'general',
+        reference: 'Sunan Abu Dawud 3535'
+    },
+    {
+        id: 115,
+        title: 'Keep Promises',
+        arabic: null,
+        description: 'Breaking promises is a sign of hypocrisy. The Prophet (PBUH) identified three signs: lying, breaking promises, and betraying trusts.',
+        category: 'general',
+        reference: 'Sahih Bukhari 33'
+    },
+    {
+        id: 116,
+        title: 'Drink Zamzam with Intention',
+        arabic: null,
+        description: 'The Prophet (PBUH) said: "The water of Zamzam is for whatever purpose it is drunk for." Make du\'a while drinking it.',
+        category: 'eating',
+        reference: 'Sunan Ibn Majah 3062'
+    },
+    {
+        id: 117,
+        title: 'Du\'a When Waking at Night',
+        arabic: 'لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',
+        description: 'The Prophet (PBUH) said: "Whoever wakes up at night and says this, then says Alhamdulillah, or SubhanAllah, or makes du\'a — it will be accepted."',
+        category: 'sleeping',
+        reference: 'Sahih Bukhari 1154'
+    },
+    {
+        id: 118,
+        title: 'Make Du\'a in Sujood',
+        arabic: null,
+        description: 'The Prophet (PBUH) said: "The closest a servant is to his Lord is when he is in prostration. So increase supplications (in it)."',
+        category: 'prayer',
+        reference: 'Sahih Muslim 482'
+    },
+    {
+        id: 119,
+        title: 'Eat Honey',
+        arabic: null,
+        description: 'The Prophet (PBUH) loved honey and recommended it. Allah says in the Quran: "There comes forth from their bellies, a drink of varying color, wherein is healing for men." (16:69)',
+        category: 'eating',
+        reference: 'Sahih Bukhari 5684'
+    },
+    {
+        id: 120,
+        title: 'Spread Knowledge',
+        arabic: null,
+        description: 'The Prophet (PBUH) said: "Convey from me, even if it is one verse." Sharing Islamic knowledge is an act of continuous charity (sadaqah jariyah).',
+        category: 'general',
+        reference: 'Sahih Bukhari 3461'
     }
 ];
 

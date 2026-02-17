@@ -338,8 +338,8 @@ export const salahSteps: SalahStep[] = [
 // Category groupings for display
 export const stepCategories = [
     { id: 'preparation', name: 'Preparation', emoji: '✨', steps: [1] },
-    { id: 'standing', name: 'Standing (Qiyam)', emoji: '⬆️', steps: [2, 3, 4, 5, 6, 7, 8] },
-    { id: 'bowing', name: 'Bowing (Ruku)', emoji: '📐', steps: [9, 10, 11, 12] },
-    { id: 'prostration', name: 'Prostration (Sujood)', emoji: '⬇️', steps: [13, 14, 15, 16, 17] },
-    { id: 'sitting', name: 'Final Sitting', emoji: '⏹️', steps: [18, 19, 20, 21] }
+    { id: 'standing', name: 'Standing (Qiyam)', emoji: '🕋', steps: [2, 3, 4, 5, 6, 7, 8] },
+    { id: 'bowing', name: 'Bowing (Ruku)', emoji: '📿', steps: [9, 10, 11, 12] },
+    { id: 'prostration', name: 'Prostration (Sujood)', emoji: '☪️', steps: [13, 14, 15, 16, 17] },
+    { id: 'sitting', name: 'Final Sitting', emoji: '🌙', steps: [18, 19, 20, 21] }
 ];

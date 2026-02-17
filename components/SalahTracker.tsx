@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { PrayerLog, PrayerName, PRAYER_NAMES, PRAYER_LABELS, AppScreen } from '../types';
-import { getTodayLog, togglePrayer, getWeeklyStats, getMonthlyStats } from '../services/salahService';
+import { getLogForDate, togglePrayerForDate, getWeeklyStats, getMonthlyStats, getToday } from '../services/salahService';
 import { getUserLocation, getPrayerTimes, getNextPrayer, PrayerTimes } from '../services/prayerTimesService';
 import { useAuth } from '../contexts/AuthContext';
-import { Check, X, Moon, Sun, Sunrise, Sunset, Clock, GraduationCap, MapPin, Navigation } from 'lucide-react';
+import { Check, X, Moon, Sun, Sunrise, Sunset, Clock, GraduationCap, MapPin, Navigation, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const PRAYER_ICONS: Record<PrayerName, React.ReactNode> = {
     fajr: <Sunrise size={20} />,
@@ -28,7 +28,8 @@ interface SalahTrackerProps {
 
 const SalahTracker: React.FC<SalahTrackerProps> = ({ onNavigate }) => {
     const { user } = useAuth();
-    const [todayLog, setTodayLog] = useState<PrayerLog | null>(null);
+    const [selectedDate, setSelectedDate] = useState<string>(getToday());
+    const [dayLog, setDayLog] = useState<PrayerLog | null>(null);
     const [weeklyStats, setWeeklyStats] = useState<Record<PrayerName, { prayed: number; missed: number }> | null>(null);
     const [monthlyStats, setMonthlyStats] = useState<Record<PrayerName, { prayed: number; missed: number }> | null>(null);
     const [viewMode, setViewMode] = useState<'today' | 'weekly' | 'monthly'>('today');
@@ -37,24 +38,37 @@ const SalahTracker: React.FC<SalahTrackerProps> = ({ onNavigate }) => {
     const [nextPrayer, setNextPrayer] = useState<{ name: string; time: string } | null>(null);
     const [prayerTimes, setPrayerTimes] = useState<PrayerTimes | null>(null);
 
+    const isToday = selectedDate === getToday();
+
     useEffect(() => {
         if (user) {
-            loadData();
-            loadPrayerTimes(); // Load prayer times separately (non-blocking)
+            loadDayLog();
+            loadStats();
+            loadPrayerTimes();
         }
     }, [user]);
 
-    const loadData = async () => {
+    // Reload log when selectedDate changes
+    useEffect(() => {
+        if (user) {
+            loadDayLog();
+        }
+    }, [selectedDate]);
+
+    const loadDayLog = async () => {
         setLoading(true);
-        const [log, weekly, monthly] = await Promise.all([
-            getTodayLog(),
+        const log = await getLogForDate(selectedDate);
+        setDayLog(log);
+        setLoading(false);
+    };
+
+    const loadStats = async () => {
+        const [weekly, monthly] = await Promise.all([
             getWeeklyStats(),
             getMonthlyStats()
         ]);
-        setTodayLog(log);
         setWeeklyStats(weekly);
         setMonthlyStats(monthly);
-        setLoading(false);
     };
 
     // Load prayer times separately so it doesn't block the main UI
@@ -77,16 +91,54 @@ const SalahTracker: React.FC<SalahTrackerProps> = ({ onNavigate }) => {
     };
 
     const handleToggle = async (prayer: PrayerName) => {
-        if (!todayLog) return;
-        const newValue = !todayLog[prayer];
-        const success = await togglePrayer(prayer, newValue);
+        if (!dayLog) return;
+        const newValue = !dayLog[prayer];
+        const success = await togglePrayerForDate(prayer, newValue, selectedDate);
         if (success) {
-            setTodayLog(prev => prev ? { ...prev, [prayer]: newValue } : null);
-            const weekly = await getWeeklyStats();
-            const monthly = await getMonthlyStats();
-            setWeeklyStats(weekly);
-            setMonthlyStats(monthly);
+            setDayLog(prev => prev ? { ...prev, [prayer]: newValue } : null);
+            // Refresh stats
+            loadStats();
         }
+    };
+
+    // Format a Date to YYYY-MM-DD using local timezone
+    const formatLocalDate = (d: Date): string => {
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    // Date navigation helpers
+    const goToPreviousDay = () => {
+        const d = new Date(selectedDate + 'T00:00:00');
+        d.setDate(d.getDate() - 1);
+        setSelectedDate(formatLocalDate(d));
+    };
+
+    const goToNextDay = () => {
+        const d = new Date(selectedDate + 'T00:00:00');
+        d.setDate(d.getDate() + 1);
+        const next = formatLocalDate(d);
+        // Don't go past today
+        if (next <= getToday()) {
+            setSelectedDate(next);
+        }
+    };
+
+    const goToToday = () => {
+        setSelectedDate(getToday());
+    };
+
+    const formatDisplayDate = (dateStr: string): string => {
+        const d = new Date(dateStr + 'T00:00:00');
+        const today = new Date(getToday() + 'T00:00:00');
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        if (dateStr === getToday()) return 'Today';
+        if (d.getTime() === yesterday.getTime()) return 'Yesterday';
+        return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
     };
 
     // Removed blocking spinner - page shows immediately with inline loading states
@@ -167,7 +219,44 @@ const SalahTracker: React.FC<SalahTrackerProps> = ({ onNavigate }) => {
             {/* Today's Prayers */}
             {viewMode === 'today' && (
                 <div className="space-y-3">
-                    <h3 className="text-sm font-bold text-[#6B8E85] uppercase tracking-wider">Today's Prayers</h3>
+                    {/* Header Label */}
+                    <h3 className="text-sm font-bold text-[#6B8E85] uppercase tracking-wider">
+                        {isToday ? "Today's Prayers" : `Prayers for ${formatDisplayDate(selectedDate)}`}
+                    </h3>
+
+                    {/* Date Navigator */}
+                    <div className="flex items-center justify-between rounded-2xl p-3"
+                        style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--glass-border)' }}
+                    >
+                        <button
+                            onClick={goToPreviousDay}
+                            className="p-2 rounded-xl transition-all hover:scale-110 active:scale-95"
+                            style={{ backgroundColor: 'var(--accent)', color: 'white' }}
+                        >
+                            <ChevronLeft size={20} />
+                        </button>
+                        <button
+                            onClick={goToToday}
+                            className="flex flex-col items-center"
+                        >
+                            <span className="text-base font-bold" style={{ color: 'var(--text-primary)' }}>
+                                {formatDisplayDate(selectedDate)}
+                            </span>
+                            {!isToday && (
+                                <span className="text-[10px] font-medium" style={{ color: 'var(--accent)' }}>
+                                    Tap to go to Today
+                                </span>
+                            )}
+                        </button>
+                        <button
+                            onClick={goToNextDay}
+                            disabled={isToday}
+                            className="p-2 rounded-xl transition-all hover:scale-110 active:scale-95 disabled:opacity-30 disabled:hover:scale-100"
+                            style={{ backgroundColor: isToday ? 'var(--bg-secondary)' : 'var(--accent)', color: isToday ? 'var(--text-secondary)' : 'white' }}
+                        >
+                            <ChevronRight size={20} />
+                        </button>
+                    </div>
                     {loading ? (
                         // Skeleton loader
                         PRAYER_NAMES.map((prayer) => (
@@ -182,12 +271,12 @@ const SalahTracker: React.FC<SalahTrackerProps> = ({ onNavigate }) => {
                                 <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
                             </div>
                         ))
-                    ) : todayLog ? (
+                    ) : dayLog ? (
                         PRAYER_NAMES.map((prayer) => (
                             <button
                                 key={prayer}
                                 onClick={() => handleToggle(prayer)}
-                                className={`w-full flex items-center justify-between p-4 rounded-2xl border-2 transition-all active:scale-98 ${todayLog[prayer]
+                                className={`w-full flex items-center justify-between p-4 rounded-2xl border-2 transition-all active:scale-98 ${dayLog[prayer]
                                     ? 'bg-[#2D5A4C] border-[#2D5A4C] text-white'
                                     : 'bg-white border-[#E8F3F0] text-[#2D5A4C] hover:border-[#2D5A4C]'
                                     }`}
@@ -196,9 +285,9 @@ const SalahTracker: React.FC<SalahTrackerProps> = ({ onNavigate }) => {
                                     {PRAYER_ICONS[prayer]}
                                     <span className="font-semibold">{PRAYER_LABELS[prayer]}</span>
                                 </div>
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${todayLog[prayer] ? 'bg-white/20' : 'bg-[#E8F3F0]'
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${dayLog[prayer] ? 'bg-white/20' : 'bg-[#E8F3F0]'
                                     }`}>
-                                    {todayLog[prayer] ? <Check size={18} /> : <X size={18} className="text-[#6B8E85]" />}
+                                    {dayLog[prayer] ? <Check size={18} /> : <X size={18} className="text-[#6B8E85]" />}
                                 </div>
                             </button>
                         ))

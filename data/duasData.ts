@@ -205,6 +205,189 @@ export const duasData: DuaEntry[] = [
         translation: 'Our Lord, forgive us and our brothers who preceded us in faith.',
         category: 'Forgiveness',
         reference: 'Quran 59:10'
+    },
+
+    // Gratitude & Praise
+    {
+        id: 22,
+        title: 'Thanking Allah',
+        arabic: 'الْحَمْدُ لِلَّهِ الَّذِي بِنِعْمَتِهِ تَتِمُّ الصَّالِحَاتُ',
+        transliteration: 'Alhamdulillahil-ladhi bi ni\'matihi tatimmus-salihat',
+        translation: 'All praise is due to Allah, by whose grace good deeds are completed.',
+        category: 'Gratitude & Praise',
+        reference: 'Sunan Ibn Majah 3803'
+    },
+    {
+        id: 23,
+        title: 'For Something Pleasing',
+        arabic: 'الْحَمْدُ لِلَّهِ الَّذِي بِنِعْمَتِهِ تَتِمُّ الصَّالِحَاتُ',
+        transliteration: 'Alhamdulillahil-ladhi bi ni\'matihi tatimmus-salihat',
+        translation: 'All praise is to Allah by whose grace all good things are completed.',
+        category: 'Gratitude & Praise',
+        reference: 'Sunan Ibn Majah 3803'
+    },
+    {
+        id: 24,
+        title: 'For Something Displeasing',
+        arabic: 'الْحَمْدُ لِلَّهِ عَلَى كُلِّ حَالٍ',
+        transliteration: 'Alhamdulillahi \'ala kulli hal',
+        translation: 'All praise is to Allah in every circumstance.',
+        category: 'Gratitude & Praise',
+        reference: 'Sunan Ibn Majah 3803'
+    },
+
+    // Guidance & Taqwa
+    {
+        id: 25,
+        title: 'For Guidance',
+        arabic: 'اللَّهُمَّ اهْدِنِي وَسَدِّدْنِي',
+        transliteration: 'Allahumma-hdini wa saddidni',
+        translation: 'O Allah, guide me and keep me on the right path.',
+        category: 'Guidance & Taqwa',
+        reference: 'Sahih Muslim 2725'
+    },
+    {
+        id: 26,
+        title: 'For Taqwa and Purity',
+        arabic: 'اللَّهُمَّ آتِ نَفْسِي تَقْوَاهَا وَزَكِّهَا أَنْتَ خَيْرُ مَنْ زَكَّاهَا أَنْتَ وَلِيُّهَا وَمَوْلَاهَا',
+        transliteration: 'Allahumma aati nafsi taqwaha wa zakkiha anta khayru man zakkaha anta waliyyuha wa mawlaha',
+        translation: 'O Allah, grant my soul its sense of conscience and purify it, for You are the best to purify it. You are its Guardian and Master.',
+        category: 'Guidance & Taqwa',
+        reference: 'Sahih Muslim 2722'
+    },
+    {
+        id: 27,
+        title: 'For Steadfastness',
+        arabic: 'يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ',
+        transliteration: 'Ya muqallibal-quloob thabbit qalbi \'ala deenik',
+        translation: 'O Turner of hearts, make my heart firm upon Your religion.',
+        category: 'Guidance & Taqwa',
+        reference: 'Jami at-Tirmidhi 2140'
+    },
+    {
+        id: 28,
+        title: 'For Beneficial Knowledge',
+        arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عِلْمٍ لَا يَنْفَعُ وَمِنْ قَلْبٍ لَا يَخْشَعُ وَمِنْ نَفْسٍ لَا تَشْبَعُ وَمِنْ دَعْوَةٍ لَا يُسْتَجَابُ لَهَا',
+        transliteration: 'Allahumma inni a\'udhu bika min \'ilmin la yanfa\', wa min qalbin la yakhsha\', wa min nafsin la tashba\', wa min da\'watin la yustajabu laha',
+        translation: 'O Allah, I seek refuge in You from knowledge that is not beneficial, from a heart that does not fear You, from a soul that is never satisfied, and from a supplication that is not answered.',
+        category: 'Guidance & Taqwa',
+        reference: 'Sahih Muslim 2722'
+    },
+
+    // Before Sleep
+    {
+        id: 29,
+        title: 'Sleeping Dua',
+        arabic: 'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا',
+        transliteration: 'Bismika Allahumma amutu wa ahya',
+        translation: 'In Your name, O Allah, I die and I live.',
+        category: 'Before Sleep',
+        reference: 'Sahih Bukhari 6324'
+    },
+    {
+        id: 30,
+        title: 'Waking Up Dua',
+        arabic: 'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ',
+        transliteration: 'Alhamdulillahil-ladhi ahyana ba\'da ma amatana wa ilayhin-nushur',
+        translation: 'All praise is for Allah who gave us life after having taken it from us and unto Him is the resurrection.',
+        category: 'Before Sleep',
+        reference: 'Sahih Bukhari 6312'
+    },
+
+    // Difficulty & Patience
+    {
+        id: 31,
+        title: 'When in Distress',
+        arabic: 'لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ',
+        transliteration: 'La ilaha illa anta subhanaka inni kuntu minaz-zalimin',
+        translation: 'There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.',
+        category: 'Difficulty & Patience',
+        reference: 'Quran 21:87'
+    },
+    {
+        id: 32,
+        title: 'For Patience in Hardship',
+        arabic: 'إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي وَأَخْلِفْ لِي خَيْرًا مِنْهَا',
+        transliteration: 'Inna lillahi wa inna ilayhi raji\'un, Allahumma-jurni fi musibati wa akhlif li khayran minha',
+        translation: 'Indeed we belong to Allah, and indeed to Him we will return. O Allah, reward me in my affliction and replace it with something better.',
+        category: 'Difficulty & Patience',
+        reference: 'Sahih Muslim 918'
+    },
+    {
+        id: 33,
+        title: 'When Overwhelmed',
+        arabic: 'حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ',
+        transliteration: 'Hasbunallahu wa ni\'mal-wakeel',
+        translation: 'Allah is sufficient for us, and He is the best disposer of affairs.',
+        category: 'Difficulty & Patience',
+        reference: 'Quran 3:173'
+    },
+    {
+        id: 34,
+        title: 'For Relief from Worry',
+        arabic: 'اللَّهُمَّ رَحْمَتَكَ أَرْجُو فَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ وَأَصْلِحْ لِي شَأْنِي كُلَّهُ لَا إِلَهَ إِلَّا أَنْتَ',
+        transliteration: 'Allahumma rahmataka arju fala takilni ila nafsi tarfata \'ayn, wa aslih li sha\'ni kullahu, la ilaha illa ant',
+        translation: 'O Allah, I hope for Your mercy, so do not leave me to myself for even a blink of an eye, and set right all my affairs. There is no god but You.',
+        category: 'Difficulty & Patience',
+        reference: 'Sunan Abu Dawud 5090'
+    },
+
+    // Exam & Studies
+    {
+        id: 35,
+        title: 'Before Studying',
+        arabic: 'رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي يَفْقَهُوا قَوْلِي',
+        transliteration: 'Rabbi ishrah li sadri wa yassir li amri wahlul \'uqdatan min lisani yafqahu qawli',
+        translation: 'O my Lord, expand my chest for me, ease my task for me, and untie the knot from my tongue so that they may understand my speech.',
+        category: 'Exam & Studies',
+        reference: 'Quran 20:25-28'
+    },
+    {
+        id: 36,
+        title: 'For Increase in Knowledge',
+        arabic: 'رَبِّ زِدْنِي عِلْمًا',
+        transliteration: 'Rabbi zidni \'ilma',
+        translation: 'My Lord, increase me in knowledge.',
+        category: 'Exam & Studies',
+        reference: 'Quran 20:114'
+    },
+    {
+        id: 37,
+        title: 'For Understanding & Memory',
+        arabic: 'اللَّهُمَّ انْفَعْنِي بِمَا عَلَّمْتَنِي وَعَلِّمْنِي مَا يَنْفَعُنِي وَزِدْنِي عِلْمًا',
+        transliteration: 'Allahumma-nfa\'ni bima \'allamtani wa \'allimni ma yanfa\'uni wa zidni \'ilma',
+        translation: 'O Allah, benefit me with what You have taught me, teach me what will benefit me, and increase me in knowledge.',
+        category: 'Exam & Studies',
+        reference: 'Jami at-Tirmidhi 3599'
+    },
+
+    // Akhirah (Hereafter)
+    {
+        id: 38,
+        title: 'For Good in Both Worlds',
+        arabic: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
+        transliteration: 'Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan wa qina \'adhaban-nar',
+        translation: 'Our Lord, give us in this world that which is good and in the Hereafter that which is good and protect us from the punishment of the Fire.',
+        category: 'Akhirah',
+        reference: 'Quran 2:201'
+    },
+    {
+        id: 39,
+        title: 'For Entry into Paradise',
+        arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ',
+        transliteration: 'Allahumma inni as\'alukal-jannah wa a\'udhu bika minan-nar',
+        translation: 'O Allah, I ask You for Paradise and seek refuge in You from the Fire.',
+        category: 'Akhirah',
+        reference: 'Sunan Abu Dawud 792'
+    },
+    {
+        id: 40,
+        title: 'For a Good Ending',
+        arabic: 'اللَّهُمَّ اجْعَلْ خَيْرَ عُمُرِي آخِرَهُ وَخَيْرَ عَمَلِي خَوَاتِمَهُ وَخَيْرَ أَيَّامِي يَوْمَ أَلْقَاكَ',
+        transliteration: 'Allahumma-j\'al khayra \'umuri akhirahu wa khayra \'amali khawatimahu wa khayra ayyami yawma alqak',
+        translation: 'O Allah, make the best of my life its end, the best of my deeds those done last, and the best of my days the day I meet You.',
+        category: 'Akhirah',
+        reference: 'Al-Mu\'jam Al-Awsat 2455'
     }
 ];
 
@@ -217,5 +400,11 @@ export const duaCategories = [
     'Illness & Healing',
     'Daily Life',
     'Travel',
-    'Forgiveness'
+    'Forgiveness',
+    'Gratitude & Praise',
+    'Guidance & Taqwa',
+    'Before Sleep',
+    'Difficulty & Patience',
+    'Exam & Studies',
+    'Akhirah'
 ];

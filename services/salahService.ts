@@ -22,10 +22,8 @@ export function getMonthStart(): string {
     return new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
 }
 
-// Get or create today's prayer log
-export async function getTodayLog(): Promise<PrayerLog | null> {
-    const today = getToday();
-
+// Get or create prayer log for a specific date (YYYY-MM-DD)
+export async function getLogForDate(date: string): Promise<PrayerLog | null> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return null;
 
@@ -33,7 +31,7 @@ export async function getTodayLog(): Promise<PrayerLog | null> {
         .from('prayer_logs')
         .select('*')
         .eq('user_id', user.id)
-        .eq('prayer_date', today)
+        .eq('prayer_date', date)
         .single();
 
     if (error && error.code !== 'PGRST116') {
@@ -42,9 +40,9 @@ export async function getTodayLog(): Promise<PrayerLog | null> {
     }
 
     if (!data) {
-        // Create a new log for today
+        // Create a new log for that date
         const newLog: PrayerLog = {
-            prayer_date: today,
+            prayer_date: date,
             fajr: false,
             dhuhr: false,
             asr: false,
@@ -68,10 +66,13 @@ export async function getTodayLog(): Promise<PrayerLog | null> {
     return data;
 }
 
-// Toggle a prayer
-export async function togglePrayer(prayer: PrayerName, value: boolean): Promise<boolean> {
-    const today = getToday();
+// Get or create today's prayer log (convenience wrapper)
+export async function getTodayLog(): Promise<PrayerLog | null> {
+    return getLogForDate(getToday());
+}
 
+// Toggle a prayer for a specific date
+export async function togglePrayerForDate(prayer: PrayerName, value: boolean, date: string): Promise<boolean> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return false;
 
@@ -79,13 +80,18 @@ export async function togglePrayer(prayer: PrayerName, value: boolean): Promise<
         .from('prayer_logs')
         .update({ [prayer]: value })
         .eq('user_id', user.id)
-        .eq('prayer_date', today);
+        .eq('prayer_date', date);
 
     if (error) {
         console.error('Error toggling prayer:', error);
         return false;
     }
     return true;
+}
+
+// Toggle a prayer for today (convenience wrapper)
+export async function togglePrayer(prayer: PrayerName, value: boolean): Promise<boolean> {
+    return togglePrayerForDate(prayer, value, getToday());
 }
 
 // Get weekly stats
