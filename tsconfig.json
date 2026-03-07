@@ -26,6 +26,7 @@
   },
   "exclude": [
     "supabase",
-    "node_modules"
+    "node_modules",
+    "verify_verses.ts"
   ]
 }

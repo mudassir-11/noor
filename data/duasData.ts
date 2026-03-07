@@ -388,6 +388,120 @@ export const duasData: DuaEntry[] = [
         translation: 'O Allah, make the best of my life its end, the best of my deeds those done last, and the best of my days the day I meet You.',
         category: 'Akhirah',
         reference: 'Al-Mu\'jam Al-Awsat 2455'
+    },
+
+    // Before Iftar (Breaking Fast)
+    {
+        id: 41,
+        title: 'Dua When Breaking Fast',
+        arabic: 'ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الأَجْرُ إِنْ شَاءَ اللَّهُ',
+        transliteration: 'Dhahaba al-zama\'u wabtallatil-\'urooqu wa thabatal-ajru in shaa Allaah',
+        translation: 'The thirst is gone, the veins are moistened, and the reward is confirmed, if Allah wills.',
+        category: 'Before Iftar',
+        reference: 'Sunan Abu Dawud 2357'
+    },
+    {
+        id: 42,
+        title: 'Asking for Acceptance of Fast',
+        arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ بِرَحْمَتِكَ الَّتِي وَسِعَتْ كُلَّ شَيْءٍ أَنْ تَغْفِرَ لِي',
+        transliteration: 'Allahumma inni as\'aluka bi rahmatik-allatee wasi\'at kulla shay\'in an taghfira lee',
+        translation: 'O Allah, I ask You by Your mercy which encompasses all things, to forgive me.',
+        category: 'Before Iftar',
+        reference: 'Sunan Ibn Majah 1753'
+    },
+    {
+        id: 43,
+        title: 'Gratitude at Iftar',
+        arabic: 'اللَّهُمَّ لَكَ صُمْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ',
+        transliteration: 'Allahumma laka sumtu wa \'ala rizqika aftartu',
+        translation: 'O Allah, for You I have fasted and upon Your provision I have broken my fast.',
+        category: 'Before Iftar',
+        reference: 'Sunan Abu Dawud 2358'
+    },
+
+    // Tahajjud (Night Prayer)
+    {
+        id: 44,
+        title: 'Opening Dua for Tahajjud',
+        arabic: 'اللَّهُمَّ لَكَ الْحَمْدُ أَنْتَ نُورُ السَّمَاوَاتِ وَالأَرْضِ وَمَنْ فِيهِنَّ وَلَكَ الْحَمْدُ أَنْتَ قَيِّمُ السَّمَاوَاتِ وَالأَرْضِ وَمَنْ فِيهِنَّ وَلَكَ الْحَمْدُ أَنْتَ الْحَقُّ',
+        transliteration: 'Allahumma lakal-hamd, Anta noorus-samaawaati wal-ard wa man feehinna, wa lakal-hamd, Anta qayyimus-samaawaati wal-ard wa man feehinna, wa lakal-hamd, Antal-haqq',
+        translation: 'O Allah, to You belongs all praise. You are the Light of the heavens and the earth and all that is in them. To You belongs all praise. You are the Sustainer of the heavens and the earth and all that is in them. To You belongs all praise. You are the Truth.',
+        category: 'Tahajjud',
+        reference: 'Sahih Bukhari 1120'
+    },
+    {
+        id: 45,
+        title: 'Seeking Forgiveness at Night',
+        arabic: 'أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ',
+        transliteration: 'Astaghfirullahal-\'Azeemal-ladhee laa ilaaha illaa Huwal-Hayyul-Qayyoomu wa atoobu ilayh',
+        translation: 'I seek forgiveness from Allah, the Almighty, whom there is none worthy of worship except Him, the Ever Living, the Sustainer, and I repent to Him.',
+        category: 'Tahajjud',
+        reference: 'Sunan Abu Dawud 1517'
+    },
+    {
+        id: 46,
+        title: 'Closeness to Allah at Night',
+        arabic: 'اللَّهُمَّ اجْعَلْ فِي قَلْبِي نُورًا وَفِي بَصَرِي نُورًا وَفِي سَمْعِي نُورًا وَعَنْ يَمِينِي نُورًا وَعَنْ يَسَارِي نُورًا',
+        transliteration: 'Allahummaj-\'al fee qalbee nooran wa fee basaree nooran wa fee sam\'ee nooran wa \'an yameenee nooran wa \'an yasaaree nooran',
+        translation: 'O Allah, place light in my heart, light in my sight, light in my hearing, light on my right, and light on my left.',
+        category: 'Tahajjud',
+        reference: 'Sahih Bukhari 6316'
+    },
+    {
+        id: 47,
+        title: 'Comprehensive Night Dua',
+        arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِرِضَاكَ مِنْ سَخَطِكَ وَبِمُعَافَاتِكَ مِنْ عُقُوبَتِكَ وَأَعُوذُ بِكَ مِنْكَ لَا أُحْصِي ثَنَاءً عَلَيْكَ أَنْتَ كَمَا أَثْنَيْتَ عَلَى نَفْسِكَ',
+        transliteration: 'Allahumma inni a\'udhu bi ridaka min sakhatik, wa bi mu\'afatika min \'uqubatik, wa a\'udhu bika mink, la uhsee thana\'an \'alayk, Anta kama athnayta \'ala nafsik',
+        translation: 'O Allah, I seek refuge in Your pleasure from Your anger, and in Your forgiveness from Your punishment. I seek refuge in You from You. I cannot fully praise You. You are as You have praised Yourself.',
+        category: 'Tahajjud',
+        reference: 'Sahih Muslim 486'
+    },
+
+    // Last Ashra of Ramadan (Last 10 Days)
+    {
+        id: 48,
+        title: 'Dua for Laylatul Qadr',
+        arabic: 'اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي',
+        transliteration: 'Allahumma innaka \'Afuwwun tuhibbul-\'afwa fa\'fu \'annee',
+        translation: 'O Allah, You are the One who pardons greatly, and You love to pardon, so pardon me.',
+        category: 'Last Ashra of Ramadan',
+        reference: 'Jami at-Tirmidhi 3513'
+    },
+    {
+        id: 49,
+        title: 'Seeking Refuge from Hellfire',
+        arabic: 'اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ',
+        transliteration: 'Allahumma ajirnee minan-naar',
+        translation: 'O Allah, save me from the Fire.',
+        category: 'Last Ashra of Ramadan',
+        reference: 'Sunan Abu Dawud 5079'
+    },
+    {
+        id: 50,
+        title: 'Sealing Ramadan with Forgiveness',
+        arabic: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَمَا قَرَّبَ إِلَيْهَا مِنْ قَوْلٍ أَوْ عَمَلٍ وَأَعُوذُ بِكَ مِنَ النَّارِ وَمَا قَرَّبَ إِلَيْهَا مِنْ قَوْلٍ أَوْ عَمَلٍ',
+        transliteration: 'Allahumma inni as\'alukal-jannah wa ma qarraba ilayha min qawlin aw \'amal, wa a\'udhu bika minan-nar wa ma qarraba ilayha min qawlin aw \'amal',
+        translation: 'O Allah, I ask You for Paradise and whatever brings me closer to it of words and deeds, and I seek refuge in You from the Fire and whatever brings me closer to it of words and deeds.',
+        category: 'Last Ashra of Ramadan',
+        reference: 'Sunan Ibn Majah 3846'
+    },
+    {
+        id: 51,
+        title: 'Acceptance of Ramadan Deeds',
+        arabic: 'رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ وَتُبْ عَلَيْنَا إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ',
+        transliteration: 'Rabbana taqabbal minna innaka Antas-Samee\'ul-\'Aleem, wa tub \'alayna innaka Antat-Tawwabur-Raheem',
+        translation: 'Our Lord, accept from us. Indeed, You are the All-Hearing, the All-Knowing. And turn to us in mercy. Indeed, You are the Accepting of repentance, the Merciful.',
+        category: 'Last Ashra of Ramadan',
+        reference: 'Quran 2:127-128'
+    },
+    {
+        id: 52,
+        title: 'Dua for the Ummah',
+        arabic: 'اللَّهُمَّ اغْفِرْ لِلْمُسْلِمِينَ وَالْمُسْلِمَاتِ وَالْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ الأَحْيَاءِ مِنْهُمْ وَالأَمْوَاتِ',
+        transliteration: 'Allahumma-ghfir lil-muslimeena wal-muslimaat, wal-mu\'mineena wal-mu\'minaat, al-ahyaa\'i minhum wal-amwaat',
+        translation: 'O Allah, forgive the Muslim men and women, the believing men and women, the living and the dead among them.',
+        category: 'Last Ashra of Ramadan',
+        reference: 'Sunan Ibn Majah 3853'
     }
 ];
 
@@ -406,5 +520,8 @@ export const duaCategories = [
     'Before Sleep',
     'Difficulty & Patience',
     'Exam & Studies',
-    'Akhirah'
+    'Akhirah',
+    'Before Iftar',
+    'Tahajjud',
+    'Last Ashra of Ramadan'
 ];

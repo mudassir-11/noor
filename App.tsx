@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { TranslationProvider } from './contexts/TranslationContext';
@@ -7,15 +7,17 @@ import Layout from './components/Layout';
 import LoginPage from './components/LoginPage';
 import Dashboard from './components/Dashboard';
 import SurahList from './components/SurahList';
-import SurahReader from './components/SurahReader';
-import SalahTracker from './components/SalahTracker';
-import BookmarksView from './components/BookmarksView';
-import PrayerTimesView from './components/PrayerTimesView';
-import SearchView from './components/SearchView';
-import SunnahView from './components/SunnahView';
-import SettingsView from './components/SettingsView';
-import LearnSalahView from './components/LearnSalahView';
-import DuasView from './components/DuasView';
+
+// Lazy-loaded screens — only fetched when the user navigates to them
+const SurahReader = lazy(() => import('./components/SurahReader'));
+const SalahTracker = lazy(() => import('./components/SalahTracker'));
+const BookmarksView = lazy(() => import('./components/BookmarksView'));
+const PrayerTimesView = lazy(() => import('./components/PrayerTimesView'));
+const SearchView = lazy(() => import('./components/SearchView'));
+const SunnahView = lazy(() => import('./components/SunnahView'));
+const SettingsView = lazy(() => import('./components/SettingsView'));
+const LearnSalahView = lazy(() => import('./components/LearnSalahView'));
+const DuasView = lazy(() => import('./components/DuasView'));
 import { AppScreen, UserProgress, Surah } from './types';
 import { fetchSurahs } from './services/surahService';
 import { getProgress, updateProgress, markSurahComplete } from './services/progressService';
@@ -108,62 +110,68 @@ const AppContent: React.FC = () => {
 
   return (
     <Layout activeScreen={activeScreen} onNavigate={setActiveScreen}>
-      {activeScreen === AppScreen.DASHBOARD && (
-        <Dashboard
-          progress={progress}
-          nextSurah={getNextSurah()}
-          onStart={handleStartSurah}
-        />
-      )}
-      {activeScreen === AppScreen.SURAH_LIST && (
-        <SurahList
-          surahs={surahs}
-          progress={progress}
-          onSelect={handleStartSurah}
-          onBookmarksClick={() => setActiveScreen(AppScreen.BOOKMARKS)}
-        />
-      )}
-      {activeScreen === AppScreen.READER && selectedSurah && (
-        <SurahReader
-          surah={selectedSurah}
-          onBack={() => setActiveScreen(AppScreen.SURAH_LIST)}
-          onComplete={handleCompleteSurah}
-        />
-      )}
-      {activeScreen === AppScreen.SALAH_TRACKER && (
-        <SalahTracker onNavigate={setActiveScreen} />
-      )}
-      {activeScreen === AppScreen.BOOKMARKS && (
-        <BookmarksView />
-      )}
-      {activeScreen === AppScreen.INSIGHTS && (
-        <div className="flex flex-col items-center justify-center h-[70vh] text-center space-y-4">
-          <div className="w-24 h-24 bg-[#E8F3F0] rounded-full flex items-center justify-center">
-            <div className="w-16 h-16 border-4 border-[#2D5A4C] border-dashed rounded-full animate-spin-slow"></div>
-          </div>
-          <h2 className="text-xl font-bold">Deep Insights Pending</h2>
-          <p className="text-[#6B8E85] max-w-xs mx-auto">Continue your journey to unlock advanced spiritual metrics.</p>
+      <Suspense fallback={
+        <div className="flex items-center justify-center h-[70vh]">
+          <div className="w-12 h-12 border-4 border-[#2D5A4C] border-t-transparent rounded-full animate-spin"></div>
         </div>
-      )}
-      {activeScreen === AppScreen.PRAYER_TIMES && (
-        <PrayerTimesView onBack={() => setActiveScreen(AppScreen.SALAH_TRACKER)} />
-      )}
-      {activeScreen === AppScreen.SEARCH && (
-        <SearchView surahs={surahs} />
-      )}
-      {activeScreen === AppScreen.SUNNAH && (
-        <SunnahView />
-      )}
-      {activeScreen === AppScreen.SETTINGS && (
-        <SettingsView onBack={() => setActiveScreen(AppScreen.DASHBOARD)} />
-      )}
-      {activeScreen === AppScreen.DUAS && (
-        <DuasView />
-      )}
+      }>
+        {activeScreen === AppScreen.DASHBOARD && (
+          <Dashboard
+            progress={progress}
+            nextSurah={getNextSurah()}
+            onStart={handleStartSurah}
+          />
+        )}
+        {activeScreen === AppScreen.SURAH_LIST && (
+          <SurahList
+            surahs={surahs}
+            progress={progress}
+            onSelect={handleStartSurah}
+            onBookmarksClick={() => setActiveScreen(AppScreen.BOOKMARKS)}
+          />
+        )}
+        {activeScreen === AppScreen.READER && selectedSurah && (
+          <SurahReader
+            surah={selectedSurah}
+            onBack={() => setActiveScreen(AppScreen.SURAH_LIST)}
+            onComplete={handleCompleteSurah}
+          />
+        )}
+        {activeScreen === AppScreen.SALAH_TRACKER && (
+          <SalahTracker onNavigate={setActiveScreen} />
+        )}
+        {activeScreen === AppScreen.BOOKMARKS && (
+          <BookmarksView />
+        )}
+        {activeScreen === AppScreen.INSIGHTS && (
+          <div className="flex flex-col items-center justify-center h-[70vh] text-center space-y-4">
+            <div className="w-24 h-24 bg-[#E8F3F0] rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 border-4 border-[#2D5A4C] border-dashed rounded-full animate-spin-slow"></div>
+            </div>
+            <h2 className="text-xl font-bold">Deep Insights Pending</h2>
+            <p className="text-[#6B8E85] max-w-xs mx-auto">Continue your journey to unlock advanced spiritual metrics.</p>
+          </div>
+        )}
+        {activeScreen === AppScreen.PRAYER_TIMES && (
+          <PrayerTimesView onBack={() => setActiveScreen(AppScreen.SALAH_TRACKER)} />
+        )}
+        {activeScreen === AppScreen.SEARCH && (
+          <SearchView surahs={surahs} />
+        )}
+        {activeScreen === AppScreen.SUNNAH && (
+          <SunnahView />
+        )}
+        {activeScreen === AppScreen.SETTINGS && (
+          <SettingsView onBack={() => setActiveScreen(AppScreen.DASHBOARD)} />
+        )}
+        {activeScreen === AppScreen.DUAS && (
+          <DuasView />
+        )}
 
-      {activeScreen === AppScreen.LEARN_SALAH && (
-        <LearnSalahView onBack={() => setActiveScreen(AppScreen.SALAH_TRACKER)} />
-      )}
+        {activeScreen === AppScreen.LEARN_SALAH && (
+          <LearnSalahView onBack={() => setActiveScreen(AppScreen.SALAH_TRACKER)} />
+        )}
+      </Suspense>
     </Layout>
   );
 };
